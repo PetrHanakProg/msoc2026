@@ -38,8 +38,18 @@ one sig True, False extends Bool {}
 
 
 -- User — SQL table: dbo.User
--- Models identity only, no fields needed for access-control predicates
-sig User {}
+
+-- The four fields below do NOT correspond to a SQL column. They materialize
+-- the canSee/canEdit/canViewPassword/canManage predicates as
+-- relations, constrained by fact MaterializedFlags to equal
+-- each predicate's truth value for every (User, Cipher) pair. This forces the
+-- Alloy solver to compute and emit these flags as part of every instance it finds
+sig User {
+    canSeeRel: set Cipher,
+    canEditRel: set Cipher,
+    canViewPasswordRel: set Cipher,
+    canManageRel: set Cipher
+}
 
 
 /*

@@ -1,8 +1,7 @@
-# alloy_test_expectations.yaml: expected outcomes per Alloy run command.
+# alloy_test_expectations.yaml: test-subject selection per alloy run command
 # Each entry declares:
 #   test_user:which derivation rule to use to find the relevant User atom
 #   test_cipher:which derivation rule to use to find the relevant Cipher atom
-#   expected: the permission flags the C# test should assert (null = don't assert)
 #
 # Derivation rules are implemented in instance_to_fixture.py:
 #   find_user_with_org_access - User with confirmed membership + collection grant
@@ -23,41 +22,27 @@ runs:
   canSeeExists:
     test_user: find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
 
   # ReadOnly path: user can see but not edit (ReadOnly=True direct grant).
   ReadOnlyPathExists:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
-      can_edit: false
 
   # HidePasswords path: user can see but not view password (HidePasswords=True).
   HidePasswordsPathExists:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
-      can_view_password: false
 
   # Manage path: user can manage (Manage=True grant on org cipher).
   ManagePathExists:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
-      can_manage: true
 
   # Group-only grant: no direct CollectionUser row, access comes from CollectionGroup
   # TVF LEFT JOIN null-guard means group grant fires only when direct grant absent.
   GroupGrantOnlyExists:
     test_user:   find_user_with_group_grant_only
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
-      can_edit: true
 
   # Direct grant overrides group grant: CollectionUser (ReadOnly=True) coexists with
   # CollectionGroup (ReadOnly=False) for the same collection. Direct grant wins.
@@ -65,52 +50,35 @@ runs:
   DirectGrantPrecedesGroupGrant:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
-      can_edit: false
 
   # Assert RevokedCannotSee: revoked member has a grant but TVF blocks access.
   RevokedMemberScenario:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: false
 
   # Assert DisabledOrgBlocksAccess: confirmed member has a grant but org disabled.
   DisabledOrgScenario:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: false
 
   # Assert UncollectedCipherInvisible: regular member, cipher in no collection.
   UncollectedCipherScenario:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_not_in_collection
-    expected:
-      can_see: false
 
   # No grant on a collected cipher: confirmed member, cipher IS in a collection,
   # but the member has no direct or group grant on any collection containing it.
   NoAccessWithoutGrantScenario:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: false
 
   # Assert PersonalCipherIsPrivate: u2 cannot see u1's personal cipher.
   PersonalPrivacyScenario:
     test_user:   find_user_not_cipher_owner
     test_cipher: find_personal_cipher
-    expected:
-      can_see: false
 
 
   # Winning-row semantics: proves the corrected canEdit/canViewPassword/canManage
   WinningRowDivergenceExists:
     test_user:   find_user_with_org_access
     test_cipher: find_cipher_in_collection
-    expected:
-      can_see: true
-      can_edit: true
-      can_view_password: false

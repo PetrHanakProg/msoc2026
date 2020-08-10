@@ -475,9 +475,18 @@ def build_fixture(
     if test_cipher is None:
         raise ValueError(f"Could not derive test_cipher with rule {cipher_rule!r} for run '{run_name}'")
 
-    # Build expected dict — only include keys where value is not None.
-    raw_expected = expectation.get("expected", {})
-    expected = {k: v for k, v in raw_expected.items() if v is not None}
+    # Build expected dict from alloy-computed flags
+    can_see = test_cipher in pai.field_targets(parsed, "canSeeRel", test_user)
+    if not can_see:
+        expected = {"can_see": False}
+    else:
+        expected = {
+            "can_see": True,
+            "can_edit": test_cipher in pai.field_targets(parsed, "canEditRel", test_user),
+            "can_view_password": test_cipher in pai.field_targets(parsed, "canViewPasswordRel", test_user),
+            "can_manage": test_cipher in pai.field_targets(parsed, "canManageRel", test_user),
+        }
+
 
     return {
         "name": run_name,

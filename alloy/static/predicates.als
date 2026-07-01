@@ -409,20 +409,131 @@ assert ReadOnlyPreventsEdit {
 
 -- At least one (user, cipher) pair where access holds
 run canSeeExists {
-    some u: User, c: Cipher | canSee[u, c]
-} for 3 but 2 Organization, 3 Cipher, 2 Collection
+/*
+    Require cipher to be in a collection so the derivation rule find_cipher_in_collection
+    is guaranteed to succeed. Without this constraint, the solver may find admin-access paths
+    where ciphers are visible without being in any collection.
+*/
+    some u: User, c: Cipher, col: Collection | canSee[u, c] and c in col.ciphers
+} for 4
 
--- The read-only path must be reachable (a user can see but not edit)
+
+-- The read-only path must be reachable (a user can see but not edit via ReadOnly=True collection grant)
+
 run ReadOnlyPathExists {
-    some u: User, c: Cipher | canSee[u, c] and not canEdit[u, c]
-} for 3 but 2 Organization, 3 Cipher, 2 Collection
+    -- Require explicit direct CollectionUser grant with readOnly=True so the solver cannot satisfy
+    -- canSee via admin-bypass or personal-ownership, and the derivation rule finds the right cipher.
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection, cu: CollectionUser |
+        canSee[u, c] and not canEdit[u, c]
+        and c in col.ciphers
+        and cu.cuOrgUser = ou and cu.cuCollection = col and cu.readOnly = True
+        and cu.cuOrgUser = ou and cu.cuCollection = col and cu.readOnly = True
+        and ou.memberUser = u and isConfirmedMember[ou, c.owner & Organization]
+} for 4
 
--- The hidePasswords path must be reachable (a user can see but not view password)
+
+-- The hidePasswords path must be reachable (a user can see but not view password via HidePasswords=True)
+
 run HidePasswordsPathExists {
-    some u: User, c: Cipher | canSee[u, c] and not canViewPassword[u, c]
-} for 3 but 2 Organization, 3 Cipher, 2 Collection
+    -- Require explicit direct CollectionUser grant with hidePasswords=True.
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection, cu: CollectionUser |
+        canSee[u, c] and not canViewPassword[u, c]
+        and c in col.ciphers
+        and cu.cuOrgUser = ou and cu.cuCollection = col and cu.hidePasswords = True
+        and ou.memberUser = u and isConfirmedMember[ou, c.owner & Organization]
+} for 4
 
--- A user can manage a collection-assigned cipher
+
+
+-- A user can manage a collection-assigned cipher (via Manage=True collection grant)
 run ManagePathExists {
-    some u: User, c: Cipher | canManage[u, c] and c.owner in Organization
-} for 3 but 2 Organization, 3 Cipher, 2 Collection
+    -- Require cipher in a collection so find_cipher_in_collection derivation succeeds.
+    -- Without this, the solver may find admin-level canManage without any collection.
+    some u: User, c: Cipher, col: Collection |
+        canManage[u, c] and c in col.ciphers and c.owner in Organization
+} for 4
+
+
+/*
+Group grant fires when there is no direct CollectionUser grant for this (orgUser, collection).
+Source: TVF LEFT JOIN GroupUser GU ON CU.CollectionId IS NULL, the null-guard condition.
+*/
+run GroupGrantOnlyExists {
+    some u: User, c: Cipher, col: Collection, ou: OrganizationUser |
+        canSee[u, c]
+        and c in col.ciphers
+        and ou.memberUser = u
+        and isConfirmedMember[ou, c.owner & Organization]
+        and groupGrant[ou, col]
+} for 5 but 2 Organization, 2 Cipher, 2 Collection
+
+/*
+Direct grant takes full precedence over group grant on the same collection.
+A CollectionUser row (ReadOnly=True) coexists with a CollectionGroup row (ReadOnly=False).
+The user cannot edit because the TVF's null-guard skips the group grant when a direct grant
+exists: LEFT JOIN GroupUser GU ON CU.CollectionId IS NULL.
+*/
+run DirectGrantPrecedesGroupGrant {
+    some u: User, c: Cipher, col: Collection, ou: OrganizationUser |
+        canSee[u, c] and not canEdit[u, c]
+        and c in col.ciphers
+        and ou.memberUser = u
+        and isConfirmedMember[ou, c.owner & Organization]
+        and directGrant[ou, col]
+        and (some g: Group, cg: CollectionGroup |
+            ou in g.members and cg.cgGroup = g
+            and cg.cgCollection = col and cg.readOnly = False)
+} for 5 but 2 Organization, 2 Cipher, 2 Collection
+
+/*
+Assertion-scenario run commands
+Each run below produces an instance that exercises an assert boundary case,
+allowing the pipeline to generate a C# integration test for that scenario.
+*/
+
+/*
+RevokedCannotSee scenario: revoked member has a collection grant but
+TVF status-gate blocks access (Status != Confirmed in the TVF WHERE clause).
+*/
+run RevokedMemberScenario {
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection |
+        c in col.ciphers and c.owner in Organization
+        and ou.memberUser = u and ou.memberOrg = (c.owner & Organization)
+        and ou.status = Revoked
+        and (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col)
+} for 4
+
+/*
+DisabledOrgBlocksAccess scenario: confirmed member has a collection grant
+but the owning org has enabled = False, which the TVF uses to gate access.
+*/
+run DisabledOrgScenario {
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection |
+        c in col.ciphers and c.owner in Organization
+        and ou.memberUser = u and ou.memberOrg = (c.owner & Organization)
+        and ou.status = Confirmed
+        and (c.owner & Organization).enabled = False
+        and (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col)
+} for 4
+
+/*
+UncollectedCipherInvisible scenario: regular member (Member or Custom role)
+exists in the org but the cipher belongs to no collection, so there is no
+grant row for the TVF to find, cipher is invisible.
+*/
+run UncollectedCipherScenario {
+    some u: User, c: Cipher, ou: OrganizationUser |
+        c.owner in Organization
+        and ou.memberUser = u and ou.memberOrg = (c.owner & Organization)
+        and ou.status = Confirmed and ou.role in (Member + Custom)
+        and no col: Collection | c in col.ciphers
+} for 4
+
+/*
+PersonalCipherIsPrivate scenario: u1 owns the cipher personally, u2 is a
+distinct user. The TVF returns only ciphers the requesting user owns or has
+an org grant for u2 has neither, so u2 cannot see u1's cipher.
+*/
+run PersonalPrivacyScenario {
+    some u1, u2: User, c: Cipher | c.owner = u1 and u1 != u2
+} for 4

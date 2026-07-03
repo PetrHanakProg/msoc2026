@@ -1,0 +1,109 @@
+alloy:
+  jar: scripts/lib/alloy6.jar
+
+  model: alloy/static/predicates.als
+
+  # Where AlloyRunner writes instance XML files (one per run command)
+  instances_dir: alloy/instances
+
+  # Where instance_to_fixture.py writes fixture JSON files (one per run command)
+  fixtures_dir: alloy/fixtures
+
+  # Where alloy_to_fixture.py writes the generated C# test file
+  generated_cs: server/test/Infrastructure.IntegrationTest/Vault/Repositories/AlloyCipherFixtureTests.cs
+
+field_map:
+
+  # Organization fields
+  enabled:
+    sig: Organization
+    fixture_key: enabled
+  allowAdminAccess:
+    sig: Organization
+    fixture_key: allow_admin_access
+
+  # Cipher fields
+  owner:
+    sig: Cipher
+    fixture_key: owner # resolvd as XOR branch in instance_to_fixture.py
+
+  # Collection fields
+  org:
+    sig: Collection
+    fixture_key: org_id
+  ciphers:
+    sig: Collection
+    fixture_key: _junction_ciphers   # produces collection_ciphers rows
+
+  # OrganizationUser fields
+  memberOrg:
+    sig: OrganizationUser
+    fixture_key: org_id
+  memberUser:
+    sig: OrganizationUser
+    fixture_key: user_id
+  status:
+    sig: OrganizationUser
+    fixture_key: status
+  role:
+    sig: OrganizationUser
+    fixture_key: type
+  key:
+    sig: OrganizationUser
+    fixture_key: has_key
+
+  # Group fields
+  groupOrg:
+    sig: Group
+    fixture_key: org_id
+  members:
+    sig: Group
+    fixture_key: _junction_members   # produces group_users rows
+
+  # CollectionUser fields
+  cuCollection:
+    sig: CollectionUser
+    fixture_key: collection_id
+  cuOrgUser:
+    sig: CollectionUser
+    fixture_key: org_user_id
+  readOnly:
+    sig: CollectionUser
+    fixture_key: read_only
+  hidePasswords:
+    sig: CollectionUser
+    fixture_key: hide_passwords
+  manage:
+    sig: CollectionUser
+    fixture_key: manage
+
+  # CollectionGroup fields
+  cgCollection:
+    sig: CollectionGroup
+    fixture_key: collection_id
+  cgGroup:
+    sig: CollectionGroup
+    fixture_key: group_id
+  # readOnly, hidePasswords, manage on CollectionGroup are resolved by sig type
+  # the CollectionUser entries above share the same field labels but different sigs
+  # The translator uses the source atom's sig type to pick the right entry.
+
+enum_values:
+
+  # OrgUserStatus - from OrganizationUserStatusType.cs
+  Invited:   0
+  Accepted:  1
+  Confirmed: 2
+  Revoked:   -1
+
+  # OrgUserRole - from OrganizationUserType.cs
+  #Alloy atom Member corresponds to C# User = 2
+  Owner:     0
+  Admin:     1
+  Member:    2
+  Custom:    4
+
+  # Bool — SQL BIT columns
+  # Keys must be quoted: unquoted True/False in YAML are Python booleans, not strings!!!!
+  "True":    1
+  "False":   0

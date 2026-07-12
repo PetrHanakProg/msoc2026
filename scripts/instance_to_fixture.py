@@ -137,6 +137,13 @@ _DERIVATION_RULES: dict[str, callable] = {
 # Entity builders
 #
 def _bare_enum_name(atom: str) -> str:
+    """
+    Strip the '$N' suffix that Alloy appends to one sig atoms.
+
+    Enum atoms are declared as one sig Confirmed extends OrgUserStatus {} so on
+    The Alloy analyzer labels their atoms as 'Confirmed$0', 'True$0', etc.
+    The pipeline_config.yaml enum_values dict uses bare names ('Confirmed', 'True').
+    """
     return atom.split("$")[0] if "$" in atom else atom
 
 

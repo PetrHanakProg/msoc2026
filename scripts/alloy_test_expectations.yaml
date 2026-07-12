@@ -1,0 +1,78 @@
+runs:
+
+  canSeeExists:
+    test_user: find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+
+  # ReadOnly path: user can see but not edit (ReadOnly=True direct grant).
+  ReadOnlyPathExists:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+      can_edit: false
+
+  # HidePasswords path: user can see but not view password (HidePasswords=True).
+  HidePasswordsPathExists:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+      can_view_password: false
+
+  # Manage path: user can manage (Manage=True grant on org cipher).
+  ManagePathExists:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+      can_manage: true
+
+  # Group-only grant: no direct CollectionUser row, access comes from CollectionGroup
+  # TVF LEFT JOIN null-guard means group grant fires only when direct grant absent.
+  GroupGrantOnlyExists:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+      can_edit: true
+
+  # Direct grant overrides group grant: CollectionUser (ReadOnly=True) coexists with
+  # CollectionGroup (ReadOnly=False) for the same collection. Direct grant wins.
+  # Source: TVF LEFT JOIN GroupUser GU ON CU.CollectionId IS NULL
+  DirectGrantPrecedesGroupGrant:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+      can_edit: false
+
+  # Assert RevokedCannotSee: revoked member has a grant but TVF blocks access.
+  RevokedMemberScenario:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: false
+
+  # Assert DisabledOrgBlocksAccess: confirmed member has a grant but org disabled.
+  DisabledOrgScenario:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: false
+
+  # Assert UncollectedCipherInvisible: regular member, cipher in no collection.
+  UncollectedCipherScenario:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_not_in_collection
+    expected:
+      can_see: false
+
+  # Assert PersonalCipherIsPrivate: u2 cannot see u1's personal cipher.
+  PersonalPrivacyScenario:
+    test_user:   find_user_not_cipher_owner
+    test_cipher: find_personal_cipher
+    expected:
+      can_see: false

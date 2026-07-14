@@ -1,3 +1,53 @@
+"""
+instance_to_fixture.py: Translate a parsed Alloy instance into a C# test fixture JSON.
+
+Takes the structured dict from parse_alloy_instance.parse_instance() and produces
+a fixture JSON describing the database entities to create and the expected permission
+outcomes to assert.
+
+Translation pipeline:
+1. Identify all atoms and their sig types from the parsed instance.
+2. For each atom, collect its field values by scanning the fields dict for tuples
+   where that atom is the source.
+3. Resolve Alloy field labels to fixture JSON keys using pipeline_config.yaml
+   field_map section.
+4. Resolve enum atom labels to integer values using
+   the enum_values section of pipeline_config.yaml.
+5. Apply test-subject derivation rules from alloy_test_expectations.yaml to identify
+   which User and Cipher atoms the test should exercise.
+6. Return a fixture dict that can be serialized to JSON and embedded in the C# test.
+
+Fixture JSON format:
+    {
+      "name": "<run command name>",
+      "expected": {
+        "can_see": true/false/null,
+        "can_edit": true/false/null,
+        "can_view_password": true/false/null,
+        "can_manage": true/false/null
+      },
+      "test_subject": {
+        "user": "<alloy atom label for the test user>",
+        "cipher": "<alloy atom label for the test cipher>"
+      },
+      "entities": {
+        "users":              [{"alloy_id": "..."}],
+        "organizations":      [{"alloy_id": "...", "enabled": bool, "allow_admin_access": bool}],
+        "ciphers":            [{"alloy_id": "...", "owner_org": "...|null", "owner_user": "...|null"}],
+        "collections":        [{"alloy_id": "...", "org_id": "..."}],
+        "collection_ciphers": [{"collection_id": "...", "cipher_id": "..."}],
+        "organization_users": [{"alloy_id": "...", "user_id": "...", "org_id": "...",
+                                "status": int, "type": int, "has_key": bool}],
+        "groups":             [{"alloy_id": "...", "org_id": "..."}],
+        "group_users":        [{"group_id": "...", "org_user_id": "..."}],
+        "collection_users":   [{"collection_id": "...", "org_user_id": "...",
+                                "read_only": bool, "hide_passwords": bool, "manage": bool}],
+        "collection_groups":  [{"collection_id": "...", "group_id": "...",
+                                "read_only": bool, "hide_passwords": bool, "manage": bool}]
+      }
+    }
+"""
+
 from __future__ import annotations
 
 import yaml
@@ -14,6 +64,16 @@ def load_config(repo_root: str | Path) -> dict:
 
 
 def _find_user_with_org_access(parsed: dict) -> str | None:
+    """
+    Find the User atom that has a confirmed OrganizationUser with at least one
+    collection grant (direct via CollectionUser) covering a cipher in a collection.
+
+    This is the user for most positive scenarios (can_see: true).
+    If multiple candidates exist, return the first found.
+
+    !: If this returns the wrong atom, the test will silently test the wrong
+    scenario. After first run, manually verify the returned atom against the XML.
+    """
     # Build index: orgUser memberUser
     ou_to_user: dict[str, str] = {}
     for ou_atom in pai.atoms_of_type(parsed, "OrganizationUser"):
@@ -78,6 +138,12 @@ def _find_user_with_org_access(parsed: dict) -> str | None:
 
 
 def _find_user_not_cipher_owner(parsed: dict) -> str | None:
+    """
+    Find a User atom that does NOT appear as the target of any owner tuple.
+
+    Used for PersonalPrivacyScenario: the user who should NOT be able to see
+    a personal cipher owned by a different user.
+    """
     # All users that appear as owner of some cipher
     owner_users: set[str] = set()
     for src, tgt in parsed["fields"].get("owner", []):
@@ -312,6 +378,20 @@ def build_fixture(
     *,
     verbose: bool = False,
 ) -> dict:
+    """
+    Build a fixture dict from a parsed Alloy instance and expectation config.
+
+    Args:
+        parsed: Output of parse_alloy_instance.parse_instance().
+        run_name:Name of the Alloy run command (used as fixture name).
+        expectation: One entry from alloy_test_expectations.yaml for this run.
+            Keys:test_user (rule name), test_cipher (rule name), expected (dict).
+        config:Loaded pipeline_config.yaml dict.
+        verbose: If True, print chosen test-subject atoms for manual verification.
+
+    Returns:
+        A fixture dict ready to be serialised to JSON.
+    """
     enum_values: dict = config.get("enum_values", {})
 
     # Resolve test subjects using derivation rules.

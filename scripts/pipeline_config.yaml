@@ -1,6 +1,18 @@
+# pipeline_config.yaml: Configuration for the Alloy to C# integration test pipeline.
+#
+# This file tells the pipeline where to find the Alloy tooling, how to map Alloy field
+# names to fixture JSON keys and what integer values correspond to each enum atom.
+
+#
 alloy:
+  # Path to the Alloy 6 JAR. Not committed!! download from:
+  # https://github.com/AlloyTools/org.alloytools.alloy/releases
+  # File: org.alloytools.alloy.dist.jar
   jar: scripts/lib/alloy6.jar
 
+  # Entrypoint module for the Alloy CLI exec subcommand.
+  # Must be the file that directly contains the run and check commands.
+  # The JARs exec CLI only finds commands in the root module, not in opened sub-modules.
   model: alloy/static/predicates.als
 
   # Where AlloyRunner writes instance XML files (one per run command)
@@ -12,6 +24,15 @@ alloy:
   # Where alloy_to_fixture.py writes the generated C# test file
   generated_cs: server/test/Infrastructure.IntegrationTest/Vault/Repositories/AlloyCipherFixtureTests.cs
 
+# Field map: Alloy field label to fixture JSON key
+#
+# These names are the field labels that appear in Alloy instance XML output,
+# mapping to the keys used in the fixture JSON entities section.
+#
+# The sig entry disambiguates fields that appear on multiple sigs The translator
+# resolves the correct entry by matching sig against the source atom's type.
+#
+# Special field behaviours are noted in comments
 field_map:
 
   # Organization fields
@@ -88,6 +109,11 @@ field_map:
   # the CollectionUser entries above share the same field labels but different sigs
   # The translator uses the source atom's sig type to pick the right entry.
 
+# Enum values: Alloy atom label integer value for the fixture JSON
+#
+# Alloy atom names come from enums.als. Some differ from C# enum member names
+# (for example OrgUserRole Member in Alloy == User = 2 in C# OrganizationUserType)
+# because the Alloy name was changed to avoid colliding with sig User {}.
 enum_values:
 
   # OrgUserStatus - from OrganizationUserStatusType.cs

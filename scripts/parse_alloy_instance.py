@@ -1,3 +1,11 @@
+"""
+parse_alloy_instance.py: Parse an Alloy instance XML file into a structured dict.
+
+The Alloy Analyzer writes instance XML when a run command finds a satisfying
+assignment. This module reads that XML and returns a normalized dict that
+instance_to_fixture.py can translate into a C# test fixture.
+"""
+
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -15,10 +23,34 @@ _BUILTIN_ATOM_LABELS = {
 
 
 def _strip_module_prefix(label: str) -> str:
+    """
+    Remove the 'this/' or 'static/' module prefix from a sig label.
+    Examples:
+        'this/User'              → 'User'
+    """
     return label.split("/")[-1]
 
 
 def parse_instance(xml_path: str | Path) -> dict:
+    """
+    Parse an Alloy instance XML file and return a structured dict.
+
+    Args:
+        xml_path: Path to the instance XML file written by AlloyRunner.java.
+
+    Returns:
+        A dict with keys:
+            command (str): The run command label, or "" if not found.
+            atoms (dict[str, str]): Maps atom label to sig type name.
+                example {"User$0": "User", "Confirmed": "OrgUserStatus", ...}
+            fields (dict[str, list[tuple[str, str]]]): Maps field label to
+                list of (source_atom, target_atom) tuples.
+                example {"enabled": [("Organization$0", "True")], ...}
+
+    Raises:
+        FileNotFoundError: If xml_path does not exist.
+        ET.ParseError: If the XML is malformed.
+    """
     tree = ET.parse(xml_path)
     root = tree.getroot()
 

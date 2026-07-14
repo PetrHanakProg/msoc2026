@@ -1,3 +1,23 @@
+# alloy_test_expectations.yaml: expected outcomes per Alloy run command.
+# Each entry declares:
+#   test_user:which derivation rule to use to find the relevant User atom
+#   test_cipher:which derivation rule to use to find the relevant Cipher atom
+#   expected: the permission flags the C# test should assert (null = don't assert)
+#
+# Derivation rules are implemented in instance_to_fixture.py:
+#   find_user_with_org_access - User with confirmed membership + collection grant
+#   find_user_not_cipher_owner - User NOT appearing as any cipher's owner
+#   find_cipher_in_collection - Cipher in at least one collection
+#   find_cipher_not_in_collection- Cipher in no collection
+#   find_personal_cipher  - Cipher whose owner is a User atom (not Org)
+#
+# !!!!!: If a derivation rule picks the wrong atom, the test will silently
+# assert the wrong scenario. After first pipeline run, verify the test_subject
+# in each generated fixture against the raw XML in alloy/instances/.
+#
+# Run command names must exactly match the run command identifiers in
+# alloy/static/predicates.als.
+
 runs:
 
   canSeeExists:

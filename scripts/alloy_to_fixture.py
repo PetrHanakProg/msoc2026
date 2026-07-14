@@ -1,3 +1,28 @@
+"""
+alloy_to_fixture.py: Alloy instances to JSON fixtures to C# tests.
+
+For each run command in alloy_test_expectations.yaml:
+1. Invokes AlloyRunner.java via subprocess, writes alloy/instances/<name>.xml
+2. Parses the XML via parse_alloy_instance.py, structured dict
+3. Translates the dict to a fixture JSON via instance_to_fixture.py
+4. Writes alloy/fixtures/<name>.json
+
+After all fixtures are produced, generates AlloyCipherFixtureTests.cs with one
+test method per fixture. The fixture JSON is embedded as a C# raw string literal
+inside the generated file — no file path discovery needed at test runtime.
+
+Usage:
+    python scripts/alloy_to_fixture.py --repo-root .
+
+Prerequisites:
+    - scripts/lib/alloy6.jar must exist
+    - Java 11+ and Python 3.9+
+    - alloy/instances/ and alloy/fixtures/ directories (created automatically)
+
+AlloyRunner.java is compiled on first run if AlloyRunner.class is absent.
+The runner is expected at scripts/AlloyRunner.java.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -27,6 +52,15 @@ def _run_alloy(
     run_name: str,
     output_xml: Path,
 ) -> None:
+    """
+    Use the Alloy JAR's built-in "exec" CLI to find an instance and write it to output_xml.
+
+    The JAR ships a headless runner, no javac required:
+        java -jar alloy6.jar exec -c <run-name> -t xml -q -f -o <dir> <model.als>
+
+    The JAR writes `<run_name>-solution-0.xml` into a per-run temporary directory. we move
+    it to output_xml so callers get a stable path and runs don't mess up each other.
+    """
     if not alloy_jar.exists():
         raise FileNotFoundError(
             f"Alloy JAR not found at {alloy_jar}. "

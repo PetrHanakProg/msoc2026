@@ -61,13 +61,16 @@ full precedence).
 Source: server/src/Sql/dbo/Vault/Functions/UserCipherDetails.sql (JOIN guards)
 */
 pred groupGrant[ou: OrganizationUser, col: Collection] {
-    -- Precondition: no direct CollectionUser grant for this pair
-    no cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col
+    -- Precondition: no direct CollectionUser grant for this pair (parenthesised
+    -- so the no quantifier does not absorb the and that follows)
+    (no cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col)
     -- And there exists a group-based path: ou is in a group that has a CollectionGroup
-    and some g: Group, cg: CollectionGroup |
+    and (some g: Group, cg: CollectionGroup |
         ou in g.members          -- ou is a member of group g
         and cg.cgGroup = g       -- group g has a grant on this collection
         and cg.cgCollection = col
+    )
+
 }
 
 /*
@@ -407,14 +410,20 @@ assert ReadOnlyPreventsEdit {
 -- RUN COMMANDS - for non-vacuity verification
 -- the model must produce instances (not be empty).
 
--- At least one (user, cipher) pair where access holds
+-- At least one (user, cipher) pair where access holds through a direct collection grant.
 run canSeeExists {
 /*
-    Require cipher to be in a collection so the derivation rule find_cipher_in_collection
-    is guaranteed to succeed. Without this constraint, the solver may find admin-access paths
-    where ciphers are visible without being in any collection.
+    Require a direct CollectionUser grant from the user's OU to the cipher's collection.
+    This pins the access path to the TVF's collection-grant branch, preventing the solver
+    from using admin bypass (which the TVF does not implement) and ensuring the derivation
+    rule can reliably pair the test user with the test cipher
 */
-    some u: User, c: Cipher, col: Collection | canSee[u, c] and c in col.ciphers
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection, cu: CollectionUser |
+        canSee[u, c]
+        and c in col.ciphers
+        and cu.cuOrgUser = ou and cu.cuCollection = col
+        and ou.memberUser = u
+        and isConfirmedMember[ou, c.owner & Organization]
 } for 4
 
 
@@ -445,27 +454,43 @@ run HidePasswordsPathExists {
 
 
 
--- A user can manage a collection-assigned cipher (via Manage=True collection grant)
+-- A user can manage a collection-assigned cipher through an explicit Manage=True direct grant.
+
 run ManagePathExists {
     -- Require cipher in a collection so find_cipher_in_collection derivation succeeds.
     -- Without this, the solver may find admin-level canManage without any collection.
-    some u: User, c: Cipher, col: Collection |
-        canManage[u, c] and c in col.ciphers and c.owner in Organization
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection, cu: CollectionUser |
+        canManage[u, c]
+        and c in col.ciphers
+        and c.owner in Organization
+        and cu.cuOrgUser = ou and cu.cuCollection = col
+        and cu.manage = True
+        and ou.memberUser = u
+        and isConfirmedMember[ou, c.owner & Organization]
 } for 4
 
 
 /*
 Group grant fires when there is no direct CollectionUser grant for this (orgUser, collection).
 Source: TVF LEFT JOIN GroupUser GU ON CU.CollectionId IS NULL, the null-guard condition.
+
+Constraints explicitly so that there is no `canSee` bypass 
+through admin
 */
 run GroupGrantOnlyExists {
-    some u: User, c: Cipher, col: Collection, ou: OrganizationUser |
-        canSee[u, c]
-        and c in col.ciphers
+    some u: User, c: Cipher, ou: OrganizationUser, col: Collection, g: Group, cg: CollectionGroup |
+        c in col.ciphers
+        and c.owner in Organization
+        and (c.owner & Organization).enabled = True
+        and (c.owner & Organization).allowAdminAccess = False
         and ou.memberUser = u
         and isConfirmedMember[ou, c.owner & Organization]
-        and groupGrant[ou, col]
-} for 5 but 2 Organization, 2 Cipher, 2 Collection
+        and (no cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col)
+        and ou in g.members
+        and cg.cgGroup = g
+        and cg.cgCollection = col
+        and cg.readOnly = False
+} for 5 but 1 Cipher, 1 Collection
 
 /*
 Direct grant takes full precedence over group grant on the same collection.

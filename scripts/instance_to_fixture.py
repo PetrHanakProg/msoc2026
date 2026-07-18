@@ -125,7 +125,7 @@ def _find_user_with_org_access(parsed: dict) -> str | None:
                 confirmed_ous_with_grant.add(ou_atom)
 
     # Map the first qualifying OU back to its User
-    for ou_atom in confirmed_ous_with_grant:
+    for ou_atom in sorted(confirmed_ous_with_grant):
         user = ou_to_user.get(ou_atom)
         if user:
             return user
@@ -190,6 +190,56 @@ def _find_personal_cipher(parsed: dict) -> str | None:
     return None
 
 
+def _find_user_with_group_grant_only(parsed: dict) -> str | None:
+    """
+    Find the User atom that has access to a cipher ONLY through a group grant.
+    """
+    ou_groups: dict[str, list[str]] = {}
+    for grp_atom in pai.atoms_of_type(parsed, "Group"):
+        for ou_atom in pai.field_targets(parsed, "members", grp_atom):
+            ou_groups.setdefault(ou_atom, []).append(grp_atom)
+
+    grp_to_cg_cols: dict[str, list[str]] = {}
+    for cg_atom in pai.atoms_of_type(parsed, "CollectionGroup"):
+        grp_targets = pai.field_targets(parsed, "cgGroup", cg_atom)
+        col_targets = pai.field_targets(parsed, "cgCollection", cg_atom)
+        if grp_targets and col_targets:
+            grp_to_cg_cols.setdefault(grp_targets[0], []).append(col_targets[0])
+
+    ou_direct_cols: dict[str, set[str]] = {}
+    for cu_atom in pai.atoms_of_type(parsed, "CollectionUser"):
+        ou_targets  = pai.field_targets(parsed, "cuOrgUser",    cu_atom)
+        col_targets = pai.field_targets(parsed, "cuCollection", cu_atom)
+        if ou_targets and col_targets:
+            ou_direct_cols.setdefault(ou_targets[0], set()).add(col_targets[0])
+
+    ou_to_user: dict[str, str] = {}
+    for ou_atom in pai.atoms_of_type(parsed, "OrganizationUser"):
+        users = pai.field_targets(parsed, "memberUser", ou_atom)
+        if users:
+            ou_to_user[ou_atom] = users[0]
+
+    def _is_confirmed(ou_atom: str) -> bool:
+        return any(
+            pai.atom_type(parsed, s) == "Confirmed"
+            for s in pai.field_targets(parsed, "status", ou_atom)
+        )
+
+    for ou_atom in sorted(pai.atoms_of_type(parsed, "OrganizationUser")):
+        if not _is_confirmed(ou_atom):
+            continue
+        user = ou_to_user.get(ou_atom)
+        if not user:
+            continue
+        direct_cols = ou_direct_cols.get(ou_atom, set())
+        for grp in ou_groups.get(ou_atom, []):
+            for col in grp_to_cg_cols.get(grp, []):
+                if col not in direct_cols:
+                    return user
+
+    return None
+
+
 # Maps rule name (from alloy_test_expectations.yaml) to the implementing function.
 _DERIVATION_RULES: dict[str, callable] = {
     "find_user_with_org_access":   _find_user_with_org_access,
@@ -197,6 +247,7 @@ _DERIVATION_RULES: dict[str, callable] = {
     "find_cipher_in_collection":   _find_cipher_in_collection,
     "find_cipher_not_in_collection": _find_cipher_not_in_collection,
     "find_personal_cipher":        _find_personal_cipher,
+    "find_user_with_group_grant_only":  _find_user_with_group_grant_only,
 }
 
 
@@ -395,23 +446,29 @@ def build_fixture(
     enum_values: dict = config.get("enum_values", {})
 
     # Resolve test subjects using derivation rules.
+
+    skolems = parsed.get("skolems", {})
+    test_user   = skolems.get(f"{run_name}_u")
+    test_cipher = skolems.get(f"{run_name}_c")
+
     user_rule   = expectation.get("test_user",   "find_user_with_org_access")
     cipher_rule = expectation.get("test_cipher", "find_cipher_in_collection")
 
-    user_fn   = _DERIVATION_RULES.get(user_rule)
-    cipher_fn = _DERIVATION_RULES.get(cipher_rule)
+    if test_user is None:
+        user_fn = _DERIVATION_RULES.get(user_rule)
+        if user_fn is None:
+            raise ValueError(f"Unknown test_user derivation rule: {user_rule!r}")
+        test_user = user_fn(parsed)
 
-    if user_fn is None:
-        raise ValueError(f"Unknown test_user derivation rule: {user_rule!r}")
-    if cipher_fn is None:
-        raise ValueError(f"Unknown test_cipher derivation rule: {cipher_rule!r}")
-
-    test_user   = user_fn(parsed)
-    test_cipher = cipher_fn(parsed)
+    if test_cipher is None:
+        cipher_fn = _DERIVATION_RULES.get(cipher_rule)
+        if cipher_fn is None:
+            raise ValueError(f"Unknown test_cipher derivation rule: {cipher_rule!r}")
+        test_cipher = cipher_fn(parsed)
 
     if verbose:
-        print(f"  test_user   ({user_rule}):   {test_user}")
-        print(f"  test_cipher ({cipher_rule}): {test_cipher}")
+        print(f"  test_user   ({user_rule if skolems.get(f'{run_name}_u') is None else 'skolem'}):   {test_user}")
+        print(f"  test_cipher ({cipher_rule if skolems.get(f'{run_name}_c') is None else 'skolem'}): {test_cipher}")
 
     if test_user is None:
         raise ValueError(f"Could not derive test_user with rule {user_rule!r} for run '{run_name}'")

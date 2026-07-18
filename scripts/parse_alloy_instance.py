@@ -87,6 +87,19 @@ def parse_instance(xml_path: str | Path) -> dict:
                 if atom_label not in atoms:
                     atoms[atom_label] = sig_type
 
+    skolems: dict[str, str] = {}
+    for skolem_elem in instance_elem.findall("skolem"):
+        raw_label = skolem_elem.get("label", "").lstrip("$")
+        if not raw_label:
+            continue
+        tuples = skolem_elem.findall("tuple")
+        if tuples:
+            atom_elems = tuples[0].findall("atom")
+            if atom_elems:
+                atom = _strip_module_prefix(atom_elems[0].get("label", ""))
+                if atom:
+                    skolems[raw_label] = atom
+
     # Build fields dict: label to a list of (source, target) tuples
     # Each <field> element contains <tuple> children, each with two <atom> children.
     fields: dict[str, list[tuple[str, str]]] = {}
@@ -115,6 +128,7 @@ def parse_instance(xml_path: str | Path) -> dict:
         "command": command,
         "atoms": atoms,
         "fields": fields,
+        "skolems": skolems,
     }
 
 

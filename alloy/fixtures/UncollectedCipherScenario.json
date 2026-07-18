@@ -1,0 +1,73 @@
+{
+  "name": "UncollectedCipherScenario",
+  "alloy_command": "Run UncollectedCipherScenario for 4",
+  "expected": {
+    "can_see": false
+  },
+  "test_subject": {
+    "user": "User$1",
+    "cipher": "Cipher$0"
+  },
+  "entities": {
+    "users": [
+      {
+        "alloy_id": "User$0"
+      },
+      {
+        "alloy_id": "User$1"
+      }
+    ],
+    "organizations": [
+      {
+        "alloy_id": "Organization$0",
+        "enabled": false,
+        "allow_admin_access": false
+      },
+      {
+        "alloy_id": "Organization$1",
+        "enabled": false,
+        "allow_admin_access": true
+      }
+    ],
+    "ciphers": [
+      {
+        "alloy_id": "Cipher$0",
+        "owner_org": "Organization$1",
+        "owner_user": null
+      }
+    ],
+    "collections": [],
+    "collection_ciphers": [],
+    "organization_users": [
+      {
+        "alloy_id": "OrganizationUser$0",
+        "org_id": "Organization$1",
+        "user_id": "User$1",
+        "status": 2,
+        "type": 4,
+        "has_key": true
+      }
+    ],
+    "groups": [
+      {
+        "alloy_id": "Group$0",
+        "org_id": "Organization$0"
+      },
+      {
+        "alloy_id": "Group$1",
+        "org_id": "Organization$0"
+      },
+      {
+        "alloy_id": "Group$2",
+        "org_id": "Organization$0"
+      },
+      {
+        "alloy_id": "Group$3",
+        "org_id": "Organization$0"
+      }
+    ],
+    "group_users": [],
+    "collection_users": [],
+    "collection_groups": []
+  }
+}

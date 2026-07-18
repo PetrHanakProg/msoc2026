@@ -1,0 +1,115 @@
+{
+  "name": "canSeeExists",
+  "alloy_command": "Run canSeeExists for 4",
+  "expected": {
+    "can_see": true
+  },
+  "test_subject": {
+    "user": "User$2",
+    "cipher": "Cipher$3"
+  },
+  "entities": {
+    "users": [
+      {
+        "alloy_id": "User$0"
+      },
+      {
+        "alloy_id": "User$1"
+      },
+      {
+        "alloy_id": "User$2"
+      }
+    ],
+    "organizations": [
+      {
+        "alloy_id": "Organization$0",
+        "enabled": true,
+        "allow_admin_access": true
+      },
+      {
+        "alloy_id": "Organization$1",
+        "enabled": true,
+        "allow_admin_access": false
+      },
+      {
+        "alloy_id": "Organization$2",
+        "enabled": false,
+        "allow_admin_access": true
+      }
+    ],
+    "ciphers": [
+      {
+        "alloy_id": "Cipher$0",
+        "owner_org": "Organization$2",
+        "owner_user": null
+      },
+      {
+        "alloy_id": "Cipher$1",
+        "owner_org": "Organization$1",
+        "owner_user": null
+      },
+      {
+        "alloy_id": "Cipher$2",
+        "owner_org": "Organization$0",
+        "owner_user": null
+      },
+      {
+        "alloy_id": "Cipher$3",
+        "owner_org": "Organization$0",
+        "owner_user": null
+      }
+    ],
+    "collections": [
+      {
+        "alloy_id": "Collection$0",
+        "org_id": "Organization$0"
+      }
+    ],
+    "collection_ciphers": [
+      {
+        "collection_id": "Collection$0",
+        "cipher_id": "Cipher$3"
+      }
+    ],
+    "organization_users": [
+      {
+        "alloy_id": "OrganizationUser$0",
+        "org_id": "Organization$0",
+        "user_id": "User$2",
+        "status": 2,
+        "type": 4,
+        "has_key": true
+      }
+    ],
+    "groups": [
+      {
+        "alloy_id": "Group$0",
+        "org_id": "Organization$0"
+      }
+    ],
+    "group_users": [
+      {
+        "group_id": "Group$0",
+        "org_user_id": "OrganizationUser$0"
+      }
+    ],
+    "collection_users": [
+      {
+        "collection_id": "Collection$0",
+        "org_user_id": "OrganizationUser$0",
+        "read_only": true,
+        "hide_passwords": false,
+        "manage": false
+      }
+    ],
+    "collection_groups": [
+      {
+        "collection_id": "Collection$0",
+        "group_id": "Group$0",
+        "read_only": true,
+        "hide_passwords": false,
+        "manage": false
+      }
+    ]
+  }
+}

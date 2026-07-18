@@ -1,0 +1,83 @@
+{
+  "name": "GroupGrantOnlyExists",
+  "alloy_command": "Run GroupGrantOnlyExists for 5 but 1 Cipher, 1 Collection",
+  "expected": {
+    "can_see": true,
+    "can_edit": true
+  },
+  "test_subject": {
+    "user": "User$2",
+    "cipher": "Cipher$0"
+  },
+  "entities": {
+    "users": [
+      {
+        "alloy_id": "User$0"
+      },
+      {
+        "alloy_id": "User$1"
+      },
+      {
+        "alloy_id": "User$2"
+      }
+    ],
+    "organizations": [
+      {
+        "alloy_id": "Organization$0",
+        "enabled": true,
+        "allow_admin_access": false
+      }
+    ],
+    "ciphers": [
+      {
+        "alloy_id": "Cipher$0",
+        "owner_org": "Organization$0",
+        "owner_user": null
+      }
+    ],
+    "collections": [
+      {
+        "alloy_id": "Collection$0",
+        "org_id": "Organization$0"
+      }
+    ],
+    "collection_ciphers": [
+      {
+        "collection_id": "Collection$0",
+        "cipher_id": "Cipher$0"
+      }
+    ],
+    "organization_users": [
+      {
+        "alloy_id": "OrganizationUser$0",
+        "org_id": "Organization$0",
+        "user_id": "User$2",
+        "status": 2,
+        "type": 4,
+        "has_key": true
+      }
+    ],
+    "groups": [
+      {
+        "alloy_id": "Group$0",
+        "org_id": "Organization$0"
+      }
+    ],
+    "group_users": [
+      {
+        "group_id": "Group$0",
+        "org_user_id": "OrganizationUser$0"
+      }
+    ],
+    "collection_users": [],
+    "collection_groups": [
+      {
+        "collection_id": "Collection$0",
+        "group_id": "Group$0",
+        "read_only": false,
+        "hide_passwords": false,
+        "manage": false
+      }
+    ]
+  }
+}

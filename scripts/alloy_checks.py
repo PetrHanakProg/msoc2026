@@ -33,7 +33,7 @@ def run_alloy_command(jar: Path, model_path: Path, command_name: str, out_dir: P
     if out_dir.exists():
         shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True)
-    subprocess.run(
+    result = subprocess.run(
         [
             "java", "-jar", str(jar),
             "exec", "-c", command_name, "-t", "xml", "-q", "-f",
@@ -41,12 +41,21 @@ def run_alloy_command(jar: Path, model_path: Path, command_name: str, out_dir: P
         ],
         capture_output=True, text=True, check=False,
     )
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"Alloy CLI exec failed for '{command_name}' (exit {result.returncode}) -- "
+            f"this is NOT a SAT/UNSAT result, something went wrong before the solver even "
+            f"ran (missing JAR/model path, bad Java install,...). Treating this as "
+            f"'holds'/'not violated' would be silently wrong.\n"
+            f"jar: {jar}\nmodel: {model_path}\n"
+            f"stdout: {result.stdout}\nstderr: {result.stderr}"
+        )
     return (out_dir / f"{command_name}-solution-0.xml").exists()
 
 
 def run_check_commands(repo_root: Path, tmp_dir: Path) -> dict[str, bool]:
     jar = repo_root / ALLOY_JAR
-    alloy_dir = repo_root / "alloy"
+    alloy_dir = repo_root / "alloy" / "static"
     wrapper = alloy_dir / _CHECK_WRAPPER_NAME
     wrapper.write_text(_CHECK_WRAPPER_TEMPLATE)
     try:

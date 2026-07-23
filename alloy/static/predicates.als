@@ -406,6 +406,28 @@ assert ReadOnlyPreventsEdit {
         implies not canEdit[u, c]
 }
 
+/*
+NoAccessWithoutGrant: a confirmed, non-bypass member with no direct or group
+grant on ANY collection containing a cipher cannot see that cipher, provided
+the cipher belongs to at least one collection at all.
+*/
+assert NoAccessWithoutGrant {
+    all u: User, c: Cipher |
+        c.owner in Organization
+        and (some col: Collection | c in col.ciphers)
+        and (c.owner & Organization).enabled = True
+        and (c.owner & Organization).allowAdminAccess = False
+        and (all ou: OrganizationUser |
+            ou.memberUser = u and ou.memberOrg = (c.owner & Organization)
+            implies
+            (no col: Collection, cu: CollectionUser |
+                c in col.ciphers and cu.cuOrgUser = ou and cu.cuCollection = col)
+            and
+            (no col: Collection, g: Group, cg: CollectionGroup |
+                c in col.ciphers and ou in g.members
+                and cg.cgGroup = g and cg.cgCollection = col))
+        implies not canSee[u, c]
+}
 
 -- RUN COMMANDS - for non-vacuity verification
 -- the model must produce instances (not be empty).
@@ -552,6 +574,30 @@ run UncollectedCipherScenario {
         and ou.memberUser = u and ou.memberOrg = (c.owner & Organization)
         and ou.status = Confirmed and ou.role in (Member + Custom)
         and no col: Collection | c in col.ciphers
+} for 4
+
+/*
+NoAccessWithoutGrant scenario: confirmed, non-bypass member exists in the org,
+the cipher IS in a collection (unlike UncollectedCipherScenario above), but the
+member has no direct or group grant on any collection containing it.
+*/
+run NoAccessWithoutGrantScenario {
+    some u: User, c: Cipher, ou: OrganizationUser |
+        c.owner in Organization
+        and (some col: Collection | c in col.ciphers)
+        and ou.memberUser = u and ou.memberOrg = (c.owner & Organization)
+        and ou.status = Confirmed
+        and (c.owner & Organization).enabled = True
+        and (c.owner & Organization).allowAdminAccess = False
+        and (all ou2: OrganizationUser |
+            ou2.memberUser = u and ou2.memberOrg = (c.owner & Organization)
+            implies
+            (no col: Collection, cu: CollectionUser |
+                c in col.ciphers and cu.cuOrgUser = ou2 and cu.cuCollection = col)
+            and
+            (no col: Collection, g: Group, cg: CollectionGroup |
+                c in col.ciphers and ou2 in g.members
+                and cg.cgGroup = g and cg.cgCollection = col))
 } for 4
 
 /*

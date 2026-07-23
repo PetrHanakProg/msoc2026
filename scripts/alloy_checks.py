@@ -13,6 +13,7 @@ CHECK_NAMES = [
     "UncollectedCipherInvisible",
     "PersonalCipherIsPrivate",
     "ReadOnlyPreventsEdit",
+    "NoAccessWithoutGrant",
 ]
 
 _CHECK_WRAPPER_NAME = "_alloy_checks_wrapper.als"
@@ -26,6 +27,7 @@ check DisabledOrgBlocksAccess for 4
 check UncollectedCipherInvisible for 4
 check PersonalCipherIsPrivate for 4
 check ReadOnlyPreventsEdit for 4
+check NoAccessWithoutGrant for 4
 """
 
 

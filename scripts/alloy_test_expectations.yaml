@@ -90,6 +90,14 @@ runs:
     expected:
       can_see: false
 
+  # No grant on a collected cipher: confirmed member, cipher IS in a collection,
+  # but the member has no direct or group grant on any collection containing it.
+  NoAccessWithoutGrantScenario:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: false
+
   # Assert PersonalCipherIsPrivate: u2 cannot see u1's personal cipher.
   PersonalPrivacyScenario:
     test_user:   find_user_not_cipher_owner

@@ -30,6 +30,7 @@ check DisabledOrgBlocksAccess for 4
 check UncollectedCipherInvisible for 4
 check PersonalCipherIsPrivate for 4
 check ReadOnlyPreventsEdit for 4
+check NoAccessWithoutGrant for 4
 
 Model is not empty, run:
 run canSeeExists for 3 but 2 Organization, 3 Cipher, 2 Collection

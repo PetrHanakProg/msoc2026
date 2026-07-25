@@ -9,7 +9,8 @@ SQL source:
   server/src/Sql/dbo/Vault/Functions/UserCipherDetails.sql
 
 C# source (for admin bypass logic):
-  server/src/Core/Vault/Authorization/NormalCipherPermissions.cs
+  server/src/Core/Vault/Authorization/GetCipherPermissionsForUserQuery.cs
+  (method CanEditAllCiphersAsync)
 
 A cipher can be in multiple collections; a user may have grants on more than one.
 Effective permission = most permissive across all paths
@@ -86,6 +87,86 @@ pred hasAnyCollectionGrant[ou: OrganizationUser, c: Cipher] {
 }
 
 
+
+/*
+WINNING-ROW HELPERS
+
+These replace the old approach of independently OR-ing a flag across every
+collection path. Instead: resolve each grant-holding collection's own
+(manage, edit, viewPassword) triple
+*/
+
+/*
+resolvedManage / resolvedEdit / resolvedViewPassword: the flag value that
+wins for a given (ou, col) pair, applying the same CU-then-CG precedence as
+the SQL COALESCE.
+*/
+pred resolvedManage[ou: OrganizationUser, col: Collection] {
+    (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col and cu.manage = True)
+    or (groupGrant[ou, col] and
+        some g: Group, cg: CollectionGroup |
+            ou in g.members and cg.cgGroup = g and cg.cgCollection = col and cg.manage = True)
+}
+
+pred resolvedEdit[ou: OrganizationUser, col: Collection] {
+    (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col and cu.readOnly = False)
+    or (groupGrant[ou, col] and
+        some g: Group, cg: CollectionGroup |
+            ou in g.members and cg.cgGroup = g and cg.cgCollection = col and cg.readOnly = False)
+}
+
+pred resolvedViewPassword[ou: OrganizationUser, col: Collection] {
+    (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col and cu.hidePasswords = False)
+    or (groupGrant[ou, col] and
+        some g: Group, cg: CollectionGroup |
+            ou in g.members and cg.cgGroup = g and cg.cgCollection = col and cg.hidePasswords = False)
+}
+
+/*
+isGrantHoldingCollection: col is a candidate row for the winning-row
+selection - it contains c, and ou has some grant (direct or group) on it.
+Same gate as hasAnyCollectionGrant's inner existential, factored out so the
+tie-break predicates below can quantify over "all of ou's candidate
+collections for c" directly.
+*/
+pred isGrantHoldingCollection[ou: OrganizationUser, c: Cipher, col: Collection] {
+    c in col.ciphers and (directGrant[ou, col] or groupGrant[ou, col])
+}
+
+/*
+collectionBeats: colA is STRICTLY preferred over colB under the real
+tie-break order (Manage desc, then Edit desc, then ViewPassword desc).
+*/
+pred collectionBeats[ou: OrganizationUser, colA, colB: Collection] {
+    (resolvedManage[ou, colA] and not resolvedManage[ou, colB])
+    or (
+        (resolvedManage[ou, colA] iff resolvedManage[ou, colB])
+        and resolvedEdit[ou, colA] and not resolvedEdit[ou, colB]
+    )
+    or (
+        (resolvedManage[ou, colA] iff resolvedManage[ou, colB])
+        and (resolvedEdit[ou, colA] iff resolvedEdit[ou, colB])
+        and resolvedViewPassword[ou, colA] and not resolvedViewPassword[ou, colB]
+    )
+}
+
+/*
+winningCollection: col is a maximal element among ou's grant-holding
+collections for c under collectionBeats
+beats it. Deliberately not the unique winner: if two collections tie
+exactly (identical resolved triples), neither beats the other, so both
+satisfy this predicate - but since a tie means IDENTICAL flag values,
+picking either one via some col: winningCollection[...] in the permission
+predicates below yields the same answer.
+LINQ tie picks an arbitrary-but-equally-correct row.
+*/
+pred winningCollection[ou: OrganizationUser, c: Cipher, col: Collection] {
+    isGrantHoldingCollection[ou, c, col]
+    and (no col2: Collection |
+        isGrantHoldingCollection[ou, c, col2] and collectionBeats[ou, col2, col])
+}
+
+
 /*
 canSee: user u can see (read) cipher c.
 This is the visibility predicate
@@ -104,7 +185,7 @@ plus the C# admin bypass):
 
 3. Admin bypass: u is an Owner or Admin in an org with the bypass flag set.
    In this case u can see ALL org ciphers regardless of collection assignment.
-   Source: NormalCipherPermissions.cs in server/src/Core/Vault/Authorization/
+   Source: GetCipherPermissionsForUserQuery.cs::CanEditAllCiphersAsync
    This bypass is checked in C# layel, NOT in SQL. The flag
    AllowAdminAccessToAllCollectionItems IS in the Organization SQL table, but
    the bypass logic is applied by the application before calling the TVF
@@ -125,6 +206,7 @@ pred canSee[u: User, c: Cipher] {
     )
 
     -- Path 3: admin bypass (Owner or Admin + AllowAdminAccessToAllCollectionItems)
+    -- This bypass is applied in C# (GetCipherPermissionsForUserQuery.cs) Before calling the TVF
     or (
         c.owner in Organization
         and (some ou: OrganizationUser |
@@ -140,19 +222,25 @@ pred canSee[u: User, c: Cipher] {
 
 /*
 canEdit: user u can create, edit, or delete ciphers in collections where c appears.
-Edit = NOT ReadOnly (for the winning grant on each collection path).
+Edit = the winning collection's own resolved edit value (see winningCollection)
 
-MAX semantics: u can edit if ANY collection path grants edit access. This mirrors
-the TVF's MAX([Edit]) aggregation over multiple collection rows.
+CORRECTED: this used to OR readOnly=False independently across every collection
+path ("MAX semantics"). Real semantics: exactly one collection's row wins the
+Manage/Edit/ViewPassword tie-break (CipherRepository.cs), and Edit is read off
+THAT row alone
 
-For personal ciphers: always editable (owner has full access).
-For org ciphers via admin bypass: always editable (bypass grants full access).
-For org ciphers via collection grants: editable if any grant has readOnly = False.
+For personal ciphers: always editable (owner has full access) - untouched, this
+path never goes through the winning-row selection in the real code either.
+For org ciphers via admin bypass: always editable - also untouched, same reason.
+For org ciphers via collection grants: editable iff the WINNING collection's
+resolved Edit is true.
+
 
 Source: UserCipherDetails:
     CASE WHEN COALESCE(CU.[ReadOnly], CG.[ReadOnly], 0) = 0 THEN 1 ELSE 0 END [Edit]
-COALESCE picks CU.ReadOnly if a direct grant exists, otherwise CG.ReadOnly.
-The "= 0" means: ReadOnly is false  Edit is true.
+(per-collection resolution, unchanged) selected by CipherRepository.cs's
+OrderByDescending(Manage).ThenByDescending(Edit).ThenByDescending(ViewPassword).First()
+(the winning-row selection, newly modeled here via winningCollection).
 */
 pred canEdit[u: User, c: Cipher] {
     -- Personal cipher: owner always has edit access
@@ -170,24 +258,15 @@ pred canEdit[u: User, c: Cipher] {
         )
     )
 
-    -- Org cipher via collection grants: any collection path with readOnly = False
+    -- Org cipher via collection grants: Edit comes from the One winning collection
     or (
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
             isConfirmedMember[ou, c.owner & Organization]
             and ou.memberUser = u
             and (c.owner & Organization).enabled = True
-            and c in col.ciphers
-            and (
-                -- Direct grant path: CollectionUser.ReadOnly = False
-                (some cu: CollectionUser |
-                    cu.cuOrgUser = ou and cu.cuCollection = col and cu.readOnly = False)
-                -- Group grant path (only when no direct grant): CollectionGroup.ReadOnly = False
-                or (groupGrant[ou, col] and
-                    some g: Group, cg: CollectionGroup |
-                        ou in g.members and cg.cgGroup = g
-                        and cg.cgCollection = col and cg.readOnly = False)
-            )
+            and winningCollection[ou, c, col]
+            and resolvedEdit[ou, col]
         )
     )
 }
@@ -195,9 +274,11 @@ pred canEdit[u: User, c: Cipher] {
 
 /*
 canViewPassword: user u can see the password of cipher c.
-ViewPassword = NOT HidePasswords (for the winning grant).
+ViewPassword = the winning collection's own resolvedViewPassword value.
 
-Same precedence as canEdit, but using the hidePasswords flag.
+
+CORRECTED: same winning-row fix as canEdit, applied to the hidePasswords flag.
+
 
 Source: UserCipherDetails:
     CASE WHEN COALESCE(CU.[HidePasswords], CG.[HidePasswords], 0) = 0
@@ -220,22 +301,15 @@ pred canViewPassword[u: User, c: Cipher] {
         )
     )
 
-    -- Org cipher via collection grants: any path with hidePasswords = False
+    -- Org cipher via collection grants: ViewPassword comes from the ONE winning
     or (
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
             isConfirmedMember[ou, c.owner & Organization]
             and ou.memberUser = u
             and (c.owner & Organization).enabled = True
-            and c in col.ciphers
-            and (
-                (some cu: CollectionUser |
-                    cu.cuOrgUser = ou and cu.cuCollection = col and cu.hidePasswords = False)
-                or (groupGrant[ou, col] and
-                    some g: Group, cg: CollectionGroup |
-                        ou in g.members and cg.cgGroup = g
-                        and cg.cgCollection = col and cg.hidePasswords = False)
-            )
+            and winningCollection[ou, c, col]
+            and resolvedViewPassword[ou, col]
         )
     )
 }
@@ -243,7 +317,7 @@ pred canViewPassword[u: User, c: Cipher] {
 
 /*
 canManage: user u can manage the collection(s) that contain cipher c.
-Manage = the manage flag is True on the winning grant.
+Manage = the winning collection's own resolvedManage value
 
 Managing a collection means: renaming it, deleting it, and assigning/removing
 access grants for other members. canManage implies full edit access in practice,
@@ -268,22 +342,15 @@ pred canManage[u: User, c: Cipher] {
         )
     )
 
-    -- Org cipher via collection grants: any path with manage = True
+    -- Org cipher via collection grants
     or (
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
             isConfirmedMember[ou, c.owner & Organization]
             and ou.memberUser = u
             and (c.owner & Organization).enabled = True
-            and c in col.ciphers
-            and (
-                (some cu: CollectionUser |
-                    cu.cuOrgUser = ou and cu.cuCollection = col and cu.manage = True)
-                or (groupGrant[ou, col] and
-                    some g: Group, cg: CollectionGroup |
-                        ou in g.members and cg.cgGroup = g
-                        and cg.cgCollection = col and cg.manage = True)
-            )
+            and winningCollection[ou, c, col]
+            and resolvedManage[ou, col]
         )
     )
 }
@@ -608,3 +675,36 @@ an org grant for u2 has neither, so u2 cannot see u1's cipher.
 run PersonalPrivacyScenario {
     some u1, u2: User, c: Cipher | c.owner = u1 and u1 != u2
 } for 4
+
+/*
+WinningRowDivergenceExists: witnesses the corrected winning-row semantics
+
+Pins one confirmed, non-bypass org member with DIRECT CollectionUser grants
+on two DIFFERENT collections (colA, colB) containing the same cipher c:
+  colA: Manage=False, ReadOnly=False (Edit=True),  HidePasswords=True  (ViewPassword=False)
+  colB: Manage=False, ReadOnly=True  (Edit=False), HidePasswords=False (ViewPassword=True)
+
+Both tie on Manage=False; the tie-break falls to Edit, where colA wins
+(Edit=True beats Edit=False) -- so the real, corrected winning row is colA:
+Edit=True, ViewPassword=False. The OLD independent-OR model this file used to
+encode would have said Edit = (True OR False) = true (agrees with corrected)
+AND ViewPassword = (False OR True) = true (DISAGREES -- old model wrongly
+said true; corrected model correctly says false). Hand-derivation confirmed
+against winningCollection/resolvedEdit/resolvedViewPassword's actual Alloy
+encoding before trusting this run command, not just against the prose above.
+*/
+run WinningRowDivergenceExists {
+    some u: User, c: Cipher, ou: OrganizationUser, colA, colB: Collection, cuA, cuB: CollectionUser |
+        c.owner in Organization
+        and (c.owner & Organization).enabled = True
+        and (c.owner & Organization).allowAdminAccess = False
+        and ou.memberUser = u
+        and isConfirmedMember[ou, c.owner & Organization]
+        and c in colA.ciphers and c in colB.ciphers
+        and colA != colB
+        and cuA.cuOrgUser = ou and cuA.cuCollection = colA
+        and cuA.manage = False and cuA.readOnly = False and cuA.hidePasswords = True
+        and cuB.cuOrgUser = ou and cuB.cuCollection = colB
+        and cuB.manage = False and cuB.readOnly = True and cuB.hidePasswords = False
+        and canEdit[u, c] and not canViewPassword[u, c]
+} for 5 but 1 Cipher, 2 Collection

@@ -104,3 +104,13 @@ runs:
     test_cipher: find_personal_cipher
     expected:
       can_see: false
+
+
+  # Winning-row semantics: proves the corrected canEdit/canViewPassword/canManage
+  WinningRowDivergenceExists:
+    test_user:   find_user_with_org_access
+    test_cipher: find_cipher_in_collection
+    expected:
+      can_see: true
+      can_edit: true
+      can_view_password: false

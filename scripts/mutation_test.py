@@ -301,6 +301,54 @@ def parse_trx(trx_path: Path) -> list[dict]:
     return results
 
 
+# Class name substrings that identify which of the two test files a TRX row came
+# from. AlloyCipherFixtureTests.cs is auto-generated from the Alloy model
+# (alloy_to_fixture.py). AlloyCipherAccessTests.cs is hand-written, covering
+# mostly the same scenarios independently.
+_GENERATED_TEST_CLASS = "AlloyCipherFixtureTests"
+_HAND_WRITTEN_TEST_CLASS = "AlloyCipherAccessTests"
+
+
+def classify_test(test_name: str) -> str | None:
+    if _GENERATED_TEST_CLASS in test_name:
+        return "generated"
+    if _HAND_WRITTEN_TEST_CLASS in test_name:
+        return "hand_written"
+    return None
+
+
+def summarize_probe_b(probe_b: dict) -> dict:
+    summary = {
+        "generated": {"total": 0, "passed": 0, "failed": 0, "failed_names": []},
+        "hand_written": {"total": 0, "passed": 0, "failed": 0, "failed_names": []},
+    }
+    for r in probe_b.get("trx_results", []):
+        if r["outcome"] not in ("Passed", "Failed"):
+            continue
+        cls = classify_test(r["test_name"])
+        if cls is None:
+            continue
+        bucket = summary[cls]
+        bucket["total"] += 1
+        if r["outcome"] == "Passed":
+            bucket["passed"] += 1
+        else:
+            bucket["failed"] += 1
+            # Strip namespace/class prefix and provider tag for a short, readable name
+            short_name = r["test_name"].split(".")[-1].split(" [")[0]
+            bucket["failed_names"].append(short_name)
+    return summary
+
+
+def print_probe_b_summary(summary: dict, *, indent: str = "    ") -> None:
+    for label, key in (("generated", "generated"), ("hand-written", "hand_written")):
+        b = summary[key]
+        line = f"{indent}{label:13s} {b['passed']}/{b['total']} passed"
+        if b["failed_names"]:
+            line += f" -- caught by: {', '.join(sorted(b['failed_names']))}"
+        print(line)
+
+
 def probe_b_dotnet_tests(repo_root: Path, scratch_db: Path, trx_name: str) -> dict:
     server_dir = repo_root / "server"
     results_dir = repo_root / ".mutation_test_trx"
@@ -612,6 +660,9 @@ def main() -> None:
         repo_root, db_source, alloy_tmp,
         db_type=args.db_type, mssql_connection_string=args.mssql_connection_string,
     )
+    if not baseline["probe_b"].get("skipped"):
+        baseline["probe_b_summary"] = summarize_probe_b(baseline["probe_b"])
+        print_probe_b_summary(baseline["probe_b_summary"])
 
     results = {"baseline": baseline, "mutations": []}
     for m in selected:
@@ -620,6 +671,9 @@ def main() -> None:
             m, repo_root, db_source, alloy_tmp,
             db_type=args.db_type, mssql_connection_string=args.mssql_connection_string,
         )
+        if not r["probe_b"].get("skipped"):
+            r["probe_b_summary"] = summarize_probe_b(r["probe_b"])
+            print_probe_b_summary(r["probe_b_summary"])
         results["mutations"].append(r)
 
     out_path = repo_root / args.out

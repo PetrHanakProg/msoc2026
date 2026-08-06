@@ -576,7 +576,6 @@ def run_one_mutation(
                 repo_root, mssql_connection_string, f"{mutation['id']}.trx"
             )
         elif mutation["category"] == "model":
-            scratch_db = make_scratch_db(repo_root, db_source)
             # Back up pipeline outputs before regenerating them from the mutated model.
             backups.backup_dir(repo_root / ALLOY_INSTANCES_DIR)
             backups.backup_dir(repo_root / ALLOY_FIXTURES_DIR)
@@ -588,8 +587,14 @@ def run_one_mutation(
             gen = regenerate_fixtures(repo_root)
             result["fixture_regeneration"] = gen
             if not gen["ok"]:
+                # UNSAT (or any other regeneration failure)
                 result["probe_b"] = {"skipped": "pipeline_generation_failed"}
+            elif db_type == "sqlserver":
+                result["probe_b"] = probe_b_dotnet_tests_mssql(
+                    repo_root, mssql_connection_string, f"{mutation['id']}.trx"
+                )
             else:
+                scratch_db = make_scratch_db(repo_root, db_source)
                 result["probe_b"] = probe_b_dotnet_tests(repo_root, scratch_db, f"{mutation['id']}.trx")
         else:
             # linq

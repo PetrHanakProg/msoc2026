@@ -164,6 +164,71 @@ MUTATIONS: list[dict] = [
             "TODO"
         ),
     },
+    # Winning-row predicates: the Alloy-side counterpart to C1
+    {
+        "id": "W1",
+        "category": "model",
+        "runnable_here": True,
+        "file": "alloy/static/predicates.als",
+        "line": 144,
+        "window": 6,
+        "find": (
+            "        and resolvedEdit[ou, colA] and not resolvedEdit[ou, colB]\n"
+            "    )\n"
+            "    or (\n"
+            "        (resolvedManage[ou, colA] iff resolvedManage[ou, colB])\n"
+            "        and (resolvedEdit[ou, colA] iff resolvedEdit[ou, colB])\n"
+            "        and resolvedViewPassword[ou, colA] and not resolvedViewPassword[ou, colB]"
+        ),
+        "replace": (
+            "        and resolvedViewPassword[ou, colA] and not resolvedViewPassword[ou, colB]\n"
+            "    )\n"
+            "    or (\n"
+            "        (resolvedManage[ou, colA] iff resolvedManage[ou, colB])\n"
+            "        and (resolvedViewPassword[ou, colA] iff resolvedViewPassword[ou, colB])\n"
+            "        and resolvedEdit[ou, colA] and not resolvedEdit[ou, colB]"
+        ),
+        "description": "Swap the Edit/ViewPassword tie-break priority in collectionBeats",
+        "predicted": (
+            "TODO"
+        ),
+    },
+    {
+        "id": "W2",
+        "category": "model",
+        "runnable_here": True,
+        "file": "alloy/static/predicates.als",
+        "line": 164,
+        "window": 3,
+        "find": (
+            "    isGrantHoldingCollection[ou, c, col]\n"
+            "    and (no col2: Collection |\n"
+            "        isGrantHoldingCollection[ou, c, col2] and collectionBeats[ou, col2, col])\n"
+        ),
+        "replace": "    isGrantHoldingCollection[ou, c, col]\n",
+        "description": (
+            "Drop winningCollection's maximality clause entirely, reverting to "
+            "isGrantHoldingCollection alone, reintroduces the independent OR"
+        ),
+        "predicted": (
+            "TODO"
+        ),
+    },
+    {
+        "id": "W3",
+        "category": "model",
+        "runnable_here": True,
+        "file": "alloy/static/predicates.als",
+        "line": 113,
+        "find": "    or (groupGrant[ou, col] and",
+        "replace": "    or (",
+        "description": (
+            "Remove the groupGrant guard from resolvedEdit's group-grant disjunct"
+        ),
+        "predicted": (
+            "TODO"
+        ),
+    },
 ]
 
 # Relative to --repo-root

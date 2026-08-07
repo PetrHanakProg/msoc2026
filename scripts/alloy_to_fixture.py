@@ -95,7 +95,7 @@ def _run_alloy(
         jar_output = Path(tmp_dir) / f"{run_name}-solution-0.xml"
         if jar_output.exists():
             shutil.move(str(jar_output), str(output_xml))
-        elif not output_xml.exists():
+        else:
             raise RuntimeError(
                 f"Alloy produced no output for '{run_name}'. "
                 f"Expected {jar_output.name} in temp dir. The run command may be UNSAT.\n"

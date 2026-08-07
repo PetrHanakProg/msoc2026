@@ -1,3 +1,40 @@
+"""
+mutation_test.py - measure the Alloy pipeline's bug-catching
+
+RESEARCH CONTEXT
+The Alloy access-control model produces two independent kinds of
+verification: assert blocks and ten
+generated + ten hand-written C# integration tests (concrete regression tests
+against the real server, with solver-generated example data). This script
+applies a small catalog of mutations to the real access-control code (server/)
+and to the Alloy model itself (alloy/static/predicates.als), one at a time
+and records which layer detect each one.
+
+Every mutated file is backed up in memory before mutation and restored
+afterward.
+
+TWO DETECTION PROBES
+Probe A (model mutations only)
+
+Probe B (all runnable mutations)
+
+USAGE
+    # Validate every find-string matches its target file exactly once,
+    # without running anything expensive
+    python scripts/mutation_test.py --repo-root . --dry-run
+
+    # Establish a clean baseline (no mutation applied) before trusting any
+    # mutated result.
+    python scripts/mutation_test.py --repo-root . --baseline-only
+
+    # Run the full experiment for every runnable mutation, writing a JSON
+    # results file
+    python scripts/mutation_test.py --repo-root . --run --out mutation_results.json
+
+    # Run a subset (comma-separated mutation IDs):
+    python scripts/mutation_test.py --repo-root . --run --mutations L1,A1 --out ...
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -231,6 +268,10 @@ MUTATIONS: list[dict] = [
     },
 ]
 
+# CHECK_NAMES, ALLOY_JAR, ALLOY_MODEL, and the wrapper-module mechanism used to
+# actually run checks commands in alloy_checks.py, shared with
+# scripts/check_assertions.py see probe_a_assertions() below.
+
 # Relative to --repo-root
 ALLOY_INSTANCES_DIR = "alloy/instances"
 ALLOY_FIXTURES_DIR = "alloy/fixtures"
@@ -238,6 +279,17 @@ GENERATED_CS = "server/test/Infrastructure.IntegrationTest/Vault/Repositories/Al
 TEST_DB_SOURCE = "server/test/Infrastructure.IntegrationTest/test.db"
 INTEGRATION_TEST_PROJ_DIR = "test/Infrastructure.IntegrationTest"  # relative to server/
 
+# MSSQL-only: the SQL-category mutations (S1-S3) target the real T-SQL TVF, which only
+# runs via the Dapper/SQL-Server repository path -- a scratch-copy-per-run strategy like
+# SQLite's (see make_scratch_db) is impractical for a real SQL Server instance (DB
+# creation is expensive), so these mutations instead run against ONE
+# persistent, already-migrated database, mutating and restoring the TVF
+# in-place via DROP FUNCTION + CREATE FUNCTION. Isolation across runs still holds:
+# AlloyCipherFixtureHelpers.CreateEntitiesFromFixture (server/test/.../AlloyCipherFixtureHelpers.cs)
+# generates a fresh GUID + unique runTag per test invocation, so leftover rows from a
+# prior mutation's run never leak into a later run's GetManyByUserIdAsync(freshUserId)
+# results, only the TVF definition needs resetting between mutations, not the data.
+#
 MSSQL_DEV_DIR = "server/dev"  # cwd for docker compose invocations (holds docker-compose.yml)
 MSSQL_HELPER_CONTAINER_PATH = "/tmp/mutation_apply.sql"  # container-side only, no bind mount
 MSSQL_TVF_FILE = "server/src/Sql/dbo/Vault/Functions/UserCipherDetails.sql"
@@ -297,6 +349,12 @@ class BackupManager:
 
 
 def apply_mutation(mutation: dict, repo_root: Path, backups: BackupManager, *, dry_run: bool) -> None:
+    """
+    Apply one mutation's find/replace, scoped to a small window of lines rather than
+    the whole file. Raises MutationTestError if the find string does not match EXACTLY
+    ONCE within that window -- this is the primary correctness gate for the whole
+    catalog.
+    """
     path = repo_root / mutation["file"]
     if not path.exists():
         raise MutationTestError(f"{mutation['id']}: target file does not exist: {path}")
@@ -375,6 +433,11 @@ _HAND_WRITTEN_TEST_CLASS = "AlloyCipherAccessTests"
 
 
 def classify_test(test_name: str) -> str | None:
+    """
+    Return generated, hand_written, or None (unrecognized class) for one TRX
+    test_name. Matches on the class name substring rather than parsing the full
+    qualified name, since that's stable across namespace/provider-tag changes.
+    """
     if _GENERATED_TEST_CLASS in test_name:
         return "generated"
     if _HAND_WRITTEN_TEST_CLASS in test_name:
@@ -383,6 +446,13 @@ def classify_test(test_name: str) -> str | None:
 
 
 def summarize_probe_b(probe_b: dict) -> dict:
+    """
+    Break down one probe_b result's TRX outcomes by test origin (generated vs.
+    hand-written) instead of one combined count. Only counts rows that actually
+    ran (Passed/Failed), NotExecuted/Skip rows exist for every unconfigured
+    provider (see DatabaseDataAttribute) and would otherwise dilute the counts
+    with noise unrelated to whether this mutation was caught.
+    """
     summary = {
         "generated": {"total": 0, "passed": 0, "failed": 0, "failed_names": []},
         "hand_written": {"total": 0, "passed": 0, "failed": 0, "failed_names": []},
@@ -406,6 +476,7 @@ def summarize_probe_b(probe_b: dict) -> dict:
 
 
 def print_probe_b_summary(summary: dict, *, indent: str = "    ") -> None:
+    """Print a summarize_probe_b() result, one line per test class."""
     for label, key in (("generated", "generated"), ("hand-written", "hand_written")):
         b = summary[key]
         line = f"{indent}{label:13s} {b['passed']}/{b['total']} passed"
@@ -415,6 +486,9 @@ def print_probe_b_summary(summary: dict, *, indent: str = "    ") -> None:
 
 
 def probe_b_dotnet_tests(repo_root: Path, scratch_db: Path, trx_name: str) -> dict:
+    """
+    Run the Alloy-derived integration tests
+    """
     server_dir = repo_root / "server"
     results_dir = repo_root / ".mutation_test_trx"
     results_dir.mkdir(exist_ok=True)
@@ -441,6 +515,10 @@ def probe_b_dotnet_tests(repo_root: Path, scratch_db: Path, trx_name: str) -> di
     }
 
 def probe_b_dotnet_tests_mssql(repo_root: Path, connection_string: str, trx_name: str) -> dict:
+    """
+    MSSQL twin of probe_b_dotnet_tests: same test filter and TRX parsing, but points
+    DatabaseDataAttribute at a real SQL Server instance instead of a scratch SQLite file.
+    """
     server_dir = repo_root / "server"
     results_dir = repo_root / ".mutation_test_trx"
     results_dir.mkdir(exist_ok=True)
@@ -469,6 +547,11 @@ def probe_b_dotnet_tests_mssql(repo_root: Path, connection_string: str, trx_name
 
 
 def push_tvf_to_mssql(repo_root: Path, function_sql_text: str) -> dict:
+    """
+    Push a CREATE FUNCTION body (the current, possibly-mutated content of
+    UserCipherDetails.sql, or the original when restoring) into the running MSSQL
+    container's vault_dev database.
+    """
     with tempfile.NamedTemporaryFile(mode="w", suffix=".sql", delete=False, encoding="utf-8") as f:
         batch = f"DROP FUNCTION [dbo].[UserCipherDetails];\nGO\n{function_sql_text}\nGO\n"
         f.write(batch)
@@ -523,6 +606,13 @@ def push_tvf_to_mssql(repo_root: Path, function_sql_text: str) -> dict:
 # Model-mutation fixture regeneration
 
 def regenerate_fixtures(repo_root: Path) -> dict:
+    """
+    Re-run scripts/alloy_to_fixture.py against the
+    alloy/predicates.als. Returns {'ok': bool, 'returncode', 'stdout', 'stderr'}.
+    A non-zero returncode most often means a run command went UNSAT under
+    the mutated model, a meaningful outcome (the tooling breaks),
+    distinct from a generated test failed result.
+    """
     proc = subprocess.run(
         [sys.executable, "scripts/alloy_to_fixture.py", "--repo-root", "."],
         cwd=repo_root, capture_output=True, text=True,
@@ -546,6 +636,10 @@ def run_one_mutation(
     db_type: str = "sqlite",
     mssql_connection_string: str | None = None,
 ) -> dict:
+    """
+    db_source: an already-migrated SQLite DB to copy fresh for THIS mutation alone
+    (db_type="sqlite" only -- ignored for "sqlserver").
+    """
     if mutation["category"] in ("sql", "dapper") and db_type != "sqlserver":
         raise MutationTestError(
             f"{mutation['id']}: category {mutation['category']!r} mutations require "
@@ -621,6 +715,10 @@ def run_baseline(
     db_type: str = "sqlite",
     mssql_connection_string: str | None = None,
 ) -> dict:
+    """
+    Baseline against the unmutated repo: both probes, so mutation results have
+    a genuine control to compare against rather than an assumed-clean one.
+    """
     if db_type == "sqlserver":
         return {
             "probe_a": probe_a_assertions(repo_root, alloy_tmp),
@@ -634,6 +732,10 @@ def run_baseline(
 
 
 def make_scratch_db(repo_root: Path, db_source: Path | None = None) -> Path:
+    """
+    Copy a source SQLite DB to a fresh scratch location. Defaults to the
+    committed server/test/Infrastructure.IntegrationTest/test.db
+    """
     src = db_source if db_source is not None else (repo_root / TEST_DB_SOURCE)
     scratch_dir = Path(tempfile.mkdtemp(prefix="mutation_test_db_"))
     dest = scratch_dir / "test.db"

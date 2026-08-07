@@ -502,10 +502,8 @@ assert NoAccessWithoutGrant {
 -- At least one (user, cipher) pair where access holds through a direct collection grant.
 run canSeeExists {
 /*
-    Require a direct CollectionUser grant from the user's OU to the cipher's collection.
-    This pins the access path to the TVF's collection-grant branch, preventing the solver
-    from using admin bypass (which the TVF does not implement) and ensuring the derivation
-    rule can reliably pair the test user with the test cipher
+    Require a direct CollectionUser grant from the user's OU to the cipher's collection,
+    and explicitly exclude admin bypass.
 */
     some u: User, c: Cipher, ou: OrganizationUser, col: Collection, cu: CollectionUser |
         canSee[u, c]
@@ -513,6 +511,7 @@ run canSeeExists {
         and cu.cuOrgUser = ou and cu.cuCollection = col
         and ou.memberUser = u
         and isConfirmedMember[ou, c.owner & Organization]
+        and (c.owner & Organization).allowAdminAccess = False  -- no admin bypass
 } for 4
 
 
@@ -556,6 +555,7 @@ run ManagePathExists {
         and cu.manage = True
         and ou.memberUser = u
         and isConfirmedMember[ou, c.owner & Organization]
+        and (c.owner & Organization).allowAdminAccess = False  -- no admin bypass
 } for 4
 
 

@@ -258,14 +258,11 @@ pred canEdit[u: User, c: Cipher] {
         )
     )
 
-    -- Org cipher via collection grants: Edit comes from the One winning collection
+    -- Org cipher via collection grants: Edit comes from the One winning row
     or (
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
-            isConfirmedMember[ou, c.owner & Organization]
-            and ou.memberUser = u
-            and (c.owner & Organization).enabled = True
-            and winningCollection[ou, c, col]
+            winningRow[u, c, ou, col]
             and resolvedEdit[ou, col]
         )
     )
@@ -305,10 +302,7 @@ pred canViewPassword[u: User, c: Cipher] {
     or (
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
-            isConfirmedMember[ou, c.owner & Organization]
-            and ou.memberUser = u
-            and (c.owner & Organization).enabled = True
-            and winningCollection[ou, c, col]
+            winningRow[u, c, ou, col]
             and resolvedViewPassword[ou, col]
         )
     )
@@ -346,13 +340,55 @@ pred canManage[u: User, c: Cipher] {
     or (
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
-            isConfirmedMember[ou, c.owner & Organization]
-            and ou.memberUser = u
-            and (c.owner & Organization).enabled = True
-            and winningCollection[ou, c, col]
+            winningRow[u, c, ou, col]
             and resolvedManage[ou, col]
         )
     )
+}
+
+/*
+isCandidateRow: (ou, col) is a genuine candidate row for user u's access to
+cipher c -- ou is one of (possibly several) confirmed OrganizationUser
+records linking u to c's owning org, and col is ou's own locally-winning
+collection under winningCollection (unchanged, reused as-is).
+
+facts.als deliberately does not forbid two OrganizationUser
+records for the same (User, Organization) pair
+*/
+
+pred isCandidateRow[u: User, c: Cipher, ou: OrganizationUser, col: Collection] {
+    c.owner in Organization
+    and isConfirmedMember[ou, c.owner & Organization]
+    and ou.memberUser = u
+    and (c.owner & Organization).enabled = True
+    and winningCollection[ou, c, col]
+}
+
+/*
+rowBeats: row (ouA, colA) is STRICTLY preferred over row (ouB, colB) under
+the real tie-break order (Manage desc, Edit desc, ViewPassword desc)
+*/
+pred rowBeats[ouA: OrganizationUser, colA: Collection, ouB: OrganizationUser, colB: Collection] {
+    (resolvedManage[ouA, colA] and not resolvedManage[ouB, colB])
+    or (
+        (resolvedManage[ouA, colA] iff resolvedManage[ouB, colB])
+        and resolvedEdit[ouA, colA] and not resolvedEdit[ouB, colB]
+    )
+    or (
+        (resolvedManage[ouA, colA] iff resolvedManage[ouB, colB])
+        and (resolvedEdit[ouA, colA] iff resolvedEdit[ouB, colB])
+        and resolvedViewPassword[ouA, colA] and not resolvedViewPassword[ouB, colB]
+    )
+}
+
+/*
+winningRow: (ou, col) is THE single winning row for user u's access to
+cipher c across all candidate rows
+*/
+pred winningRow[u: User, c: Cipher, ou: OrganizationUser, col: Collection] {
+    isCandidateRow[u, c, ou, col]
+    and (no ou2: OrganizationUser, col2: Collection |
+        isCandidateRow[u, c, ou2, col2] and rowBeats[ou2, col2, ou, col])
 }
 
 
@@ -708,3 +744,29 @@ run WinningRowDivergenceExists {
         and cuB.manage = False and cuB.readOnly = True and cuB.hidePasswords = False
         and canEdit[u, c] and not canViewPassword[u, c]
 } for 5 but 1 Cipher, 2 Collection
+
+/*
+MATERIALIZED FLAGS - forcing the solver to compute
+the expected outcome of every fixture
+
+scripts/alloy_test_expectations.yaml used to have an expected
+block per run command saying what canSee/canEdit/canViewPassword/canManage
+should evaluate to for the scenario and typed
+it in, entirely independent of these predicates. Nothing cross-checked that
+guess against what the model actually says. This fact closes that gap: it
+binds each User field declared in signatures.als to the corresponding
+predicate via iff, so any satisfying instance the solver finds must carry
+the correct, model-computed answer as part of the instance itself.
+scripts/instance_to_fixture.py reads it directly from the parsed XML
+instead of a YAML entry.
+
+This is not a new constraint on the modeled
+*/
+
+fact MaterializedFlags {
+    all u: User, c: Cipher | c in u.canSeeRel iff canSee[u, c]
+    all u: User, c: Cipher | c in u.canEditRel iff canEdit[u, c]
+    all u: User, c: Cipher | c in u.canViewPasswordRel iff canViewPassword[u, c]
+    all u: User, c: Cipher | c in u.canManageRel iff canManage[u, c]
+}
+

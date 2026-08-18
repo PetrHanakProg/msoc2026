@@ -263,7 +263,7 @@ pred canEdit[u: User, c: Cipher] {
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
             winningRow[u, c, ou, col]
-            and resolvedEdit[ou, col]
+            and finalEdit[ou, col]
         )
     )
 }
@@ -303,7 +303,7 @@ pred canViewPassword[u: User, c: Cipher] {
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
             winningRow[u, c, ou, col]
-            and resolvedViewPassword[ou, col]
+            and finalViewPassword[ou, col]
         )
     )
 }
@@ -341,7 +341,7 @@ pred canManage[u: User, c: Cipher] {
         c.owner in Organization
         and (some ou: OrganizationUser, col: Collection |
             winningRow[u, c, ou, col]
-            and resolvedManage[ou, col]
+            and finalManage[ou, col]
         )
     )
 }
@@ -390,6 +390,57 @@ pred winningRow[u: User, c: Cipher, ou: OrganizationUser, col: Collection] {
     and (no ou2: OrganizationUser, col2: Collection |
         isCandidateRow[u, c, ou2, col2] and rowBeats[ou2, col2, ou, col])
 }
+
+
+/*
+finalManage / finalEdit / finalViewPassword: the flag value that actually
+wins for a given (ou, col) pair once winningRow has already picked it
+read from ONE underlying grant row, never mixed across several.
+
+this only corrects the final flag read-off for whichever
+(ou, col) winningRow already selected.
+*/
+pred isCandidateGroupGrant[ou: OrganizationUser, col: Collection, cg: CollectionGroup] {
+    (no cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col)  -- direct grant would win outright
+    and cg.cgCollection = col
+    and (some g: Group | cg.cgGroup = g and ou in g.members)
+}
+
+pred cgBeats[cgA, cgB: CollectionGroup] {
+    (cgA.manage = True and cgB.manage = False)
+    or (
+        (cgA.manage = cgB.manage)
+        and cgA.readOnly = False and cgB.readOnly = True
+    )
+    or (
+        (cgA.manage = cgB.manage)
+        and (cgA.readOnly = cgB.readOnly)
+        and cgA.hidePasswords = False and cgB.hidePasswords = True
+    )
+}
+
+pred winningGroupGrant[ou: OrganizationUser, col: Collection, cg: CollectionGroup] {
+    isCandidateGroupGrant[ou, col, cg]
+    and (no cg2: CollectionGroup |
+        isCandidateGroupGrant[ou, col, cg2] and cgBeats[cg2, cg])
+}
+
+pred finalManage[ou: OrganizationUser, col: Collection] {
+    (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col and cu.manage = True)
+    or (some cg: CollectionGroup | winningGroupGrant[ou, col, cg] and cg.manage = True)
+}
+
+pred finalEdit[ou: OrganizationUser, col: Collection] {
+    (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col and cu.readOnly = False)
+    or (some cg: CollectionGroup | winningGroupGrant[ou, col, cg] and cg.readOnly = False)
+}
+
+pred finalViewPassword[ou: OrganizationUser, col: Collection] {
+    (some cu: CollectionUser | cu.cuOrgUser = ou and cu.cuCollection = col and cu.hidePasswords = False)
+    or (some cg: CollectionGroup | winningGroupGrant[ou, col, cg] and cg.hidePasswords = False)
+}
+
+
 
 
 /*

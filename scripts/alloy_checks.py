@@ -14,6 +14,8 @@ CHECK_NAMES = [
     "PersonalCipherIsPrivate",
     "ReadOnlyPreventsEdit",
     "NoAccessWithoutGrant",
+    "HidePasswordsPreventsViewPassword",
+    "NoManageGrantPreventsManage",
 ]
 
 _CHECK_WRAPPER_NAME = "_alloy_checks_wrapper.als"
@@ -28,6 +30,8 @@ check UncollectedCipherInvisible for 4
 check PersonalCipherIsPrivate for 4
 check ReadOnlyPreventsEdit for 4
 check NoAccessWithoutGrant for 4
+check HidePasswordsPreventsViewPassword for 4
+check NoManageGrantPreventsManage for 4
 """
 
 

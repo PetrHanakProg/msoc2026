@@ -560,6 +560,79 @@ assert ReadOnlyPreventsEdit {
         implies not canEdit[u, c]
 }
 
+
+/*
+HidePasswordsPreventsViewPassword: if ALL collection grants for a user on a
+cipher have HidePasswords=True, canViewPassword must be false.
+
+Security property: the ReadOnlyPreventsEdit companion for the password-
+visibility flag. HidePasswords is orthogonal to ReadOnly
+
+Note: this assertion does NOT apply when the admin bypass is active (admin bypass
+always grants ViewPassword). The assertion is scoped to the non-bypass case, same
+as ReadOnlyPreventsEdit.
+*/
+assert HidePasswordsPreventsViewPassword {
+    all u: User, c: Cipher |
+        c.owner in Organization
+        and (some ou: OrganizationUser |
+            ou.memberUser = u and isConfirmedMember[ou, c.owner & Organization])
+        -- No admin bypass active for this user
+        and not (some ou: OrganizationUser |
+            ou.memberUser = u
+            and isConfirmedMember[ou, c.owner & Organization]
+            and (c.owner & Organization).allowAdminAccess = True
+            and ou.role in (Owner + Admin))
+        -- All direct grants for this user on this cipher have HidePasswords=True
+        and (all col: Collection, cu: CollectionUser |
+            c in col.ciphers and cu.cuOrgUser.memberUser = u and cu.cuCollection = col
+            implies cu.hidePasswords = True)
+        -- All group grants for this user on this cipher have HidePasswords=True
+        and (all col: Collection, g: Group, cg: CollectionGroup |
+            c in col.ciphers and cg.cgCollection = col and cg.cgGroup = g
+            and (some ou: OrganizationUser |
+                ou.memberUser = u and ou in g.members and isConfirmedMember[ou, c.owner & Organization])
+            implies cg.hidePasswords = True)
+        implies not canViewPassword[u, c]
+}
+
+
+/*
+NoManageGrantPreventsManage: if no collection grant for a user on a cipher
+has Manage=True, canManage must be false.
+
+Security property: the ReadOnlyPreventsEdit/HidePasswordsPreventsViewPassword
+companion for the Manage flag. Manage is a direct grants privilege boolean
+(unlike ReadOnly/HidePasswords, which deny privilege by being True), so the
+per-grant condition here checks manage = False on every grant, not = True.
+*/
+assert NoManageGrantPreventsManage {
+    all u: User, c: Cipher |
+        c.owner in Organization
+        and (some ou: OrganizationUser |
+            ou.memberUser = u and isConfirmedMember[ou, c.owner & Organization])
+        -- No admin bypass active for this user
+        and not (some ou: OrganizationUser |
+            ou.memberUser = u
+            and isConfirmedMember[ou, c.owner & Organization]
+            and (c.owner & Organization).allowAdminAccess = True
+            and ou.role in (Owner + Admin))
+        -- No direct grant for this user on this cipher has Manage=True
+        and (all col: Collection, cu: CollectionUser |
+            c in col.ciphers and cu.cuOrgUser.memberUser = u and cu.cuCollection = col
+            implies cu.manage = False)
+        -- No group grant for this user on this cipher has Manage=True
+        and (all col: Collection, g: Group, cg: CollectionGroup |
+            c in col.ciphers and cg.cgCollection = col and cg.cgGroup = g
+            and (some ou: OrganizationUser |
+                ou.memberUser = u and ou in g.members and isConfirmedMember[ou, c.owner & Organization])
+            implies cg.manage = False)
+        implies not canManage[u, c]
+}
+
+
+
+
 /*
 NoAccessWithoutGrant: a confirmed, non-bypass member with no direct or group
 grant on ANY collection containing a cipher cannot see that cipher, provided

@@ -201,6 +201,53 @@ MUTATIONS: list[dict] = [
             "TODO"
         ),
     },
+    {
+        "id": "A4",
+        "category": "model",
+        "runnable_here": True,
+        "file": "alloy/static/predicates.als",
+        "line": 257,
+        "find": "            and ou.role in (Owner + Admin)",
+        "replace": "            and ou.role in (Member + Custom)",
+        "description": (
+            "Flip canEdit's admin-bypass role check (path 2) -- the canEdit analog of A3. "
+            "Same 'flipped/copy-pasted role set' bug class, different predicate."
+        ),
+        "predicted": (
+            "TODO"
+        ),
+    },
+    {
+        "id": "A5",
+        "category": "model",
+        "runnable_here": True,
+        "file": "alloy/static/predicates.als",
+        "line": 297,
+        "find": "            and ou.role in (Owner + Admin)",
+        "replace": "            and ou.role in (Member + Custom)",
+        "description": (
+            "Flip canViewPassword's admin-bypass role check (path 2) -- the canViewPassword "
+            "analog of A3."
+        ),
+        "predicted": (
+            "TODO"
+        ),
+    },
+    {
+        "id": "A6",
+        "category": "model",
+        "runnable_here": True,
+        "file": "alloy/static/predicates.als",
+        "line": 335,
+        "find": "            and ou.role in (Owner + Admin)",
+        "replace": "            and ou.role in (Member + Custom)",
+        "description": (
+            "Flip canManage's admin-bypass role check (path 2) -- the canManage analog of A3."
+        ),
+        "predicted": (
+            "TODO"
+        ),
+    },
     # Winning-row predicates: the Alloy-side counterpart to C1
     {
         "id": "W1",

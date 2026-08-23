@@ -867,7 +867,7 @@ run WinningRowDivergenceExists {
         and cuB.cuOrgUser = ou and cuB.cuCollection = colB
         and cuB.manage = False and cuB.readOnly = True and cuB.hidePasswords = False
         and canEdit[u, c] and not canViewPassword[u, c]
-} for 5 but 1 Cipher, 2 Collection
+} for 5 but 1 Cipher, 2 Collection, 1 OrganizationUser
 
 /*
 MATERIALIZED FLAGS - forcing the solver to compute

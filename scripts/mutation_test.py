@@ -592,6 +592,60 @@ def probe_b_dotnet_tests_mssql(repo_root: Path, connection_string: str, trx_name
         "stderr_tail": proc.stderr[-4000:],
     }
 
+def probe_b_dotnet_tests_mysql(repo_root: Path, connection_string: str, trx_name: str) -> dict:
+    """
+    MySQL twin of probe_b_dotnet_tests_mssql: same test filter and TRX parsing, but points
+    DatabaseDataAttribute at a real MySQL instance instead of a scratch SQLite file. Unlike
+    the MSSQL twin
+    """
+    server_dir = repo_root / "server"
+    results_dir = repo_root / ".mutation_test_trx"
+    results_dir.mkdir(exist_ok=True)
+    trx_path = results_dir / trx_name
+
+    env = os.environ.copy()
+    env["BW_TEST_DATABASES__0__TYPE"] = "MySql"
+    env["BW_TEST_DATABASES__0__CONNECTIONSTRING"] = connection_string
+
+    proc = subprocess.run(
+        [
+            "dotnet", "test", INTEGRATION_TEST_PROJ_DIR,
+            "--filter", "FullyQualifiedName~Alloy",
+            "--logger", f"trx;LogFileName={trx_path.name}",
+            "--results-directory", str(results_dir),
+        ],
+        cwd=server_dir, env=env, capture_output=True, text=True,
+    )
+    return {
+        "trx_results": parse_trx(trx_path),
+        "returncode": proc.returncode,
+        "stdout_tail": proc.stdout[-4000:],
+        "stderr_tail": proc.stderr[-4000:],
+    }
+
+
+def run_probe_b(
+    repo_root: Path,
+    db_type: str,
+    db_source: Path | None,
+    mssql_connection_string: str | None,
+    mysql_connection_string: str | None,
+    trx_name: str,
+) -> dict:
+    """
+    Shared 3-way dispatch for which backend does Probe B actually run against --
+
+    sqlserver and mysql both use one persistent, already-migrated DB, no
+    per-run scratch copy
+    """
+    if db_type == "sqlserver":
+        return probe_b_dotnet_tests_mssql(repo_root, mssql_connection_string, trx_name)
+    elif db_type == "mysql":
+        return probe_b_dotnet_tests_mysql(repo_root, mysql_connection_string, trx_name)
+    else:
+        scratch_db = make_scratch_db(repo_root, db_source)
+        return probe_b_dotnet_tests(repo_root, scratch_db, trx_name)
+
 
 def push_tvf_to_mssql(repo_root: Path, function_sql_text: str) -> dict:
     """
@@ -682,16 +736,19 @@ def run_one_mutation(
     *,
     db_type: str = "sqlite",
     mssql_connection_string: str | None = None,
+    mysql_connection_string: str | None = None,
 ) -> dict:
     """
     db_source: an already-migrated SQLite DB to copy fresh for THIS mutation alone
     (db_type="sqlite" only -- ignored for "sqlserver").
+    (db_type="sqlite" only -- ignored for "sqlserver"/"mysql").
     """
     if mutation["category"] in ("sql", "dapper") and db_type != "sqlserver":
         raise MutationTestError(
             f"{mutation['id']}: category {mutation['category']!r} mutations require "
-            f"--db-type sqlserver (got db_type={db_type!r}) -- running under sqlite "
-            f"would silently probe an unrelated code path and produce a meaningless result."
+            f"--db-type sqlserver (got db_type={db_type!r}) -- running under a "
+            f"non-SQL-Server backend would silently probe an unrelated code path and "
+            f"produce a meaningless result."
         )
 
     backups = BackupManager()
@@ -730,18 +787,22 @@ def run_one_mutation(
             if not gen["ok"]:
                 # UNSAT (or any other regeneration failure)
                 result["probe_b"] = {"skipped": "pipeline_generation_failed"}
-            elif db_type == "sqlserver":
-                result["probe_b"] = probe_b_dotnet_tests_mssql(
-                    repo_root, mssql_connection_string, f"{mutation['id']}.trx"
-                )
             else:
-                scratch_db = make_scratch_db(repo_root, db_source)
-                result["probe_b"] = probe_b_dotnet_tests(repo_root, scratch_db, f"{mutation['id']}.trx")
+                # model mutations regenerate fixtures against the mutated Alloy model,
+                # but Probe B still runs the resulting generated test against the REAL,
+                # unmutated server
+                result["probe_b"] = run_probe_b(
+                    repo_root, db_type, db_source, mssql_connection_string,
+                    mysql_connection_string, f"{mutation['id']}.trx",
+                )
         else:
             # linq
-            scratch_db = make_scratch_db(repo_root, db_source)
             apply_mutation(mutation, repo_root, backups, dry_run=False)
-            result["probe_b"] = probe_b_dotnet_tests(repo_root, scratch_db, f"{mutation['id']}.trx")
+            result["probe_b"] = run_probe_b(
+                repo_root, db_type, db_source, mssql_connection_string,
+                mysql_connection_string, f"{mutation['id']}.trx",
+            )
+
 
     finally:
         backups.restore_all()
@@ -761,20 +822,18 @@ def run_baseline(
     *,
     db_type: str = "sqlite",
     mssql_connection_string: str | None = None,
+    mysql_connection_string: str | None = None,
 ) -> dict:
     """
     Baseline against the unmutated repo: both probes, so mutation results have
     a genuine control to compare against rather than an assumed-clean one.
     """
-    if db_type == "sqlserver":
-        return {
-            "probe_a": probe_a_assertions(repo_root, alloy_tmp),
-            "probe_b": probe_b_dotnet_tests_mssql(repo_root, mssql_connection_string, "baseline.trx"),
-        }
-    scratch_db = make_scratch_db(repo_root, db_source)
     return {
         "probe_a": probe_a_assertions(repo_root, alloy_tmp),
-        "probe_b": probe_b_dotnet_tests(repo_root, scratch_db, "baseline.trx"),
+        "probe_b": run_probe_b(
+            repo_root, db_type, db_source, mssql_connection_string,
+            mysql_connection_string, "baseline.trx",
+        ),
     }
 
 
@@ -832,6 +891,11 @@ def main() -> None:
         "--mssql-connection-string", default=None,
         help="Connection string to the already-migrated, persistent MSSQL",
     )
+    parser.add_argument(
+        "--mysql-connection-string", default=None,
+        help="Connection string to the already-migrated, persistent  MySQL"
+    )
+
     args = parser.parse_args()
 
     repo_root = Path(args.repo_root).resolve()
@@ -839,6 +903,10 @@ def main() -> None:
 
     if args.db_type == "sqlserver" and not args.mssql_connection_string and not args.dry_run:
         parser.error("--db-type sqlserver requires --mssql-connection-string.")
+    if args.db_type == "mysql" and not args.mysql_connection_string and not args.dry_run:
+        parser.error("--db-type mysql requires --mysql-connection-string.")
+
+
 
     if args.mutations:
         wanted = set(args.mutations.split(","))
@@ -860,13 +928,15 @@ def main() -> None:
     if args.db_type == "sqlite":
         print(f"DB source: {db_source or TEST_DB_SOURCE} (a fresh scratch copy is made for each run)")
     else:
-        print(f"DB type: sqlserver, persistent DB (no per-run scratch copy)")
+        print(f"DB type: {args.db_type}, persistent DB (no per-run scratch copy)")
+
     alloy_tmp = Path(tempfile.mkdtemp(prefix="mutation_test_alloy_"))
 
     if args.baseline_only:
         result = run_baseline(
             repo_root, db_source, alloy_tmp,
             db_type=args.db_type, mssql_connection_string=args.mssql_connection_string,
+            mysql_connection_string=args.mysql_connection_string,
         )
         print(json.dumps({"baseline": result}, indent=2, default=str))
         return
@@ -878,6 +948,7 @@ def main() -> None:
     baseline = run_baseline(
         repo_root, db_source, alloy_tmp,
         db_type=args.db_type, mssql_connection_string=args.mssql_connection_string,
+        mysql_connection_string=args.mysql_connection_string,
     )
     if not baseline["probe_b"].get("skipped"):
         baseline["probe_b_summary"] = summarize_probe_b(baseline["probe_b"])
@@ -889,6 +960,7 @@ def main() -> None:
         r = run_one_mutation(
             m, repo_root, db_source, alloy_tmp,
             db_type=args.db_type, mssql_connection_string=args.mssql_connection_string,
+            mysql_connection_string=args.mysql_connection_string,
         )
         if not r["probe_b"].get("skipped"):
             r["probe_b_summary"] = summarize_probe_b(r["probe_b"])

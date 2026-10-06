@@ -1,15 +1,15 @@
 {
-  "name": "ManagePathExists",
-  "alloy_command": "Run ManagePathExists for 4",
+  "name": "WinningRowDivergenceExists",
+  "alloy_command": "Run WinningRowDivergenceExists for 5 but 1 Cipher, 2 Collection, 1 OrganizationUser",
   "expected": {
     "can_see": true,
     "can_edit": true,
-    "can_view_password": true,
-    "can_manage": true
+    "can_view_password": false,
+    "can_manage": false
   },
   "test_subject": {
     "user": "User$0",
-    "cipher": "Cipher$1"
+    "cipher": "Cipher$0"
   },
   "entities": {
     "users": [
@@ -20,12 +20,12 @@
     "organizations": [
       {
         "alloy_id": "Organization$0",
-        "enabled": true,
-        "allow_admin_access": false
+        "enabled": false,
+        "allow_admin_access": true
       },
       {
         "alloy_id": "Organization$1",
-        "enabled": false,
+        "enabled": true,
         "allow_admin_access": false
       }
     ],
@@ -33,11 +33,6 @@
       {
         "alloy_id": "Cipher$0",
         "owner_org": "Organization$1",
-        "owner_user": null
-      },
-      {
-        "alloy_id": "Cipher$1",
-        "owner_org": "Organization$0",
         "owner_user": null
       }
     ],
@@ -48,39 +43,23 @@
       },
       {
         "alloy_id": "Collection$1",
-        "org_id": "Organization$0"
-      },
-      {
-        "alloy_id": "Collection$2",
-        "org_id": "Organization$0"
-      },
-      {
-        "alloy_id": "Collection$3",
-        "org_id": "Organization$0"
+        "org_id": "Organization$1"
       }
     ],
     "collection_ciphers": [
       {
-        "collection_id": "Collection$2",
-        "cipher_id": "Cipher$1"
+        "collection_id": "Collection$0",
+        "cipher_id": "Cipher$0"
       },
       {
-        "collection_id": "Collection$3",
-        "cipher_id": "Cipher$1"
+        "collection_id": "Collection$1",
+        "cipher_id": "Cipher$0"
       }
     ],
     "organization_users": [
       {
         "alloy_id": "OrganizationUser$0",
         "org_id": "Organization$1",
-        "user_id": null,
-        "status": 0,
-        "type": 4,
-        "has_key": false
-      },
-      {
-        "alloy_id": "OrganizationUser$1",
-        "org_id": "Organization$0",
         "user_id": "User$0",
         "status": 2,
         "type": 4,
@@ -90,42 +69,45 @@
     "groups": [
       {
         "alloy_id": "Group$0",
-        "org_id": "Organization$1"
+        "org_id": "Organization$0"
       },
       {
         "alloy_id": "Group$1",
-        "org_id": "Organization$0"
+        "org_id": "Organization$1"
       }
     ],
-    "group_users": [
-      {
-        "group_id": "Group$0",
-        "org_user_id": "OrganizationUser$0"
-      }
-    ],
+    "group_users": [],
     "collection_users": [
       {
-        "collection_id": "Collection$2",
-        "org_user_id": "OrganizationUser$1",
-        "read_only": false,
+        "collection_id": "Collection$0",
+        "org_user_id": "OrganizationUser$0",
+        "read_only": true,
         "hide_passwords": false,
-        "manage": true
+        "manage": false
       },
       {
-        "collection_id": "Collection$0",
+        "collection_id": "Collection$1",
         "org_user_id": "OrganizationUser$0",
         "read_only": false,
         "hide_passwords": true,
         "manage": false
-      },
-      {
-        "collection_id": "Collection$3",
-        "org_user_id": "OrganizationUser$1",
-        "read_only": true,
-        "hide_passwords": false,
-        "manage": true
       }
     ],
-    "collection_groups": []
+    "collection_groups": [
+      {
+        "collection_id": "Collection$1",
+        "group_id": "Group$1",
+        "read_only": true,
+        "hide_passwords": false,
+        "manage": false
+      },
+      {
+        "collection_id": "Collection$0",
+        "group_id": "Group$1",
+        "read_only": false,
+        "hide_passwords": true,
+        "manage": true
+      }
+    ]
   }
 }

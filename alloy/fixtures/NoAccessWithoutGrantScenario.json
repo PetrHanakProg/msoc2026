@@ -1,15 +1,12 @@
 {
-  "name": "ManagePathExists",
-  "alloy_command": "Run ManagePathExists for 4",
+  "name": "NoAccessWithoutGrantScenario",
+  "alloy_command": "Run NoAccessWithoutGrantScenario for 4",
   "expected": {
-    "can_see": true,
-    "can_edit": true,
-    "can_view_password": true,
-    "can_manage": true
+    "can_see": false
   },
   "test_subject": {
     "user": "User$0",
-    "cipher": "Cipher$1"
+    "cipher": "Cipher$3"
   },
   "entities": {
     "users": [
@@ -22,21 +19,26 @@
         "alloy_id": "Organization$0",
         "enabled": true,
         "allow_admin_access": false
-      },
-      {
-        "alloy_id": "Organization$1",
-        "enabled": false,
-        "allow_admin_access": false
       }
     ],
     "ciphers": [
       {
         "alloy_id": "Cipher$0",
-        "owner_org": "Organization$1",
+        "owner_org": "Organization$0",
         "owner_user": null
       },
       {
         "alloy_id": "Cipher$1",
+        "owner_org": "Organization$0",
+        "owner_user": null
+      },
+      {
+        "alloy_id": "Cipher$2",
+        "owner_org": null,
+        "owner_user": "User$0"
+      },
+      {
+        "alloy_id": "Cipher$3",
         "owner_org": "Organization$0",
         "owner_user": null
       }
@@ -44,7 +46,7 @@
     "collections": [
       {
         "alloy_id": "Collection$0",
-        "org_id": "Organization$1"
+        "org_id": "Organization$0"
       },
       {
         "alloy_id": "Collection$1",
@@ -61,25 +63,25 @@
     ],
     "collection_ciphers": [
       {
-        "collection_id": "Collection$2",
+        "collection_id": "Collection$1",
         "cipher_id": "Cipher$1"
+      },
+      {
+        "collection_id": "Collection$2",
+        "cipher_id": "Cipher$0"
       },
       {
         "collection_id": "Collection$3",
         "cipher_id": "Cipher$1"
+      },
+      {
+        "collection_id": "Collection$3",
+        "cipher_id": "Cipher$3"
       }
     ],
     "organization_users": [
       {
         "alloy_id": "OrganizationUser$0",
-        "org_id": "Organization$1",
-        "user_id": null,
-        "status": 0,
-        "type": 4,
-        "has_key": false
-      },
-      {
-        "alloy_id": "OrganizationUser$1",
         "org_id": "Organization$0",
         "user_id": "User$0",
         "status": 2,
@@ -90,42 +92,41 @@
     "groups": [
       {
         "alloy_id": "Group$0",
-        "org_id": "Organization$1"
-      },
-      {
-        "alloy_id": "Group$1",
         "org_id": "Organization$0"
       }
     ],
-    "group_users": [
-      {
-        "group_id": "Group$0",
-        "org_user_id": "OrganizationUser$0"
-      }
-    ],
+    "group_users": [],
     "collection_users": [
       {
         "collection_id": "Collection$2",
-        "org_user_id": "OrganizationUser$1",
+        "org_user_id": "OrganizationUser$0",
         "read_only": false,
         "hide_passwords": false,
         "manage": true
       },
       {
-        "collection_id": "Collection$0",
+        "collection_id": "Collection$1",
         "org_user_id": "OrganizationUser$0",
-        "read_only": false,
+        "read_only": true,
         "hide_passwords": true,
         "manage": false
       },
       {
-        "collection_id": "Collection$3",
-        "org_user_id": "OrganizationUser$1",
+        "collection_id": "Collection$0",
+        "org_user_id": "OrganizationUser$0",
         "read_only": true,
         "hide_passwords": false,
         "manage": true
       }
     ],
-    "collection_groups": []
+    "collection_groups": [
+      {
+        "collection_id": "Collection$2",
+        "group_id": "Group$0",
+        "read_only": true,
+        "hide_passwords": false,
+        "manage": false
+      }
+    ]
   }
 }

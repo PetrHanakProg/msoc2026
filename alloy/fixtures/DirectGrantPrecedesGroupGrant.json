@@ -3,25 +3,18 @@
   "alloy_command": "Run DirectGrantPrecedesGroupGrant for 5 but 2 Organization, 2 Cipher, 2 Collection",
   "expected": {
     "can_see": true,
-    "can_edit": false
+    "can_edit": false,
+    "can_view_password": true,
+    "can_manage": true
   },
   "test_subject": {
-    "user": "User$3",
+    "user": "User$0",
     "cipher": "Cipher$0"
   },
   "entities": {
     "users": [
       {
         "alloy_id": "User$0"
-      },
-      {
-        "alloy_id": "User$1"
-      },
-      {
-        "alloy_id": "User$2"
-      },
-      {
-        "alloy_id": "User$3"
       }
     ],
     "organizations": [
@@ -42,15 +35,11 @@
       {
         "alloy_id": "Collection$0",
         "org_id": "Organization$0"
-      },
-      {
-        "alloy_id": "Collection$1",
-        "org_id": "Organization$0"
       }
     ],
     "collection_ciphers": [
       {
-        "collection_id": "Collection$1",
+        "collection_id": "Collection$0",
         "cipher_id": "Cipher$0"
       }
     ],
@@ -58,7 +47,15 @@
       {
         "alloy_id": "OrganizationUser$0",
         "org_id": "Organization$0",
-        "user_id": "User$3",
+        "user_id": null,
+        "status": 0,
+        "type": 4,
+        "has_key": false
+      },
+      {
+        "alloy_id": "OrganizationUser$1",
+        "org_id": "Organization$0",
+        "user_id": "User$0",
         "status": 2,
         "type": 4,
         "has_key": true
@@ -68,50 +65,34 @@
       {
         "alloy_id": "Group$0",
         "org_id": "Organization$0"
-      },
-      {
-        "alloy_id": "Group$1",
-        "org_id": "Organization$0"
-      },
-      {
-        "alloy_id": "Group$2",
-        "org_id": "Organization$0"
       }
     ],
     "group_users": [
       {
         "group_id": "Group$0",
-        "org_user_id": "OrganizationUser$0"
-      },
-      {
-        "group_id": "Group$1",
-        "org_user_id": "OrganizationUser$0"
-      },
-      {
-        "group_id": "Group$2",
-        "org_user_id": "OrganizationUser$0"
+        "org_user_id": "OrganizationUser$1"
       }
     ],
     "collection_users": [
       {
         "collection_id": "Collection$0",
         "org_user_id": "OrganizationUser$0",
-        "read_only": true,
+        "read_only": false,
         "hide_passwords": true,
-        "manage": true
+        "manage": false
       },
       {
-        "collection_id": "Collection$1",
-        "org_user_id": "OrganizationUser$0",
+        "collection_id": "Collection$0",
+        "org_user_id": "OrganizationUser$1",
         "read_only": true,
         "hide_passwords": false,
-        "manage": false
+        "manage": true
       }
     ],
     "collection_groups": [
       {
-        "collection_id": "Collection$1",
-        "group_id": "Group$2",
+        "collection_id": "Collection$0",
+        "group_id": "Group$0",
         "read_only": false,
         "hide_passwords": false,
         "manage": false

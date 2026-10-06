@@ -5,8 +5,8 @@
     "can_see": false
   },
   "test_subject": {
-    "user": "User$0",
-    "cipher": "Cipher$0"
+    "user": "User$2",
+    "cipher": "Cipher$3"
   },
   "entities": {
     "users": [
@@ -27,12 +27,12 @@
       {
         "alloy_id": "Organization$0",
         "enabled": true,
-        "allow_admin_access": false
+        "allow_admin_access": true
       },
       {
         "alloy_id": "Organization$1",
         "enabled": false,
-        "allow_admin_access": true
+        "allow_admin_access": false
       },
       {
         "alloy_id": "Organization$2",
@@ -44,6 +44,21 @@
       {
         "alloy_id": "Cipher$0",
         "owner_org": null,
+        "owner_user": "User$1"
+      },
+      {
+        "alloy_id": "Cipher$1",
+        "owner_org": null,
+        "owner_user": "User$1"
+      },
+      {
+        "alloy_id": "Cipher$2",
+        "owner_org": null,
+        "owner_user": "User$0"
+      },
+      {
+        "alloy_id": "Cipher$3",
+        "owner_org": null,
         "owner_user": "User$3"
       }
     ],
@@ -52,25 +67,25 @@
     "organization_users": [
       {
         "alloy_id": "OrganizationUser$0",
-        "org_id": "Organization$2",
+        "org_id": "Organization$1",
         "user_id": "User$1",
-        "status": 2,
+        "status": -1,
         "type": 4,
-        "has_key": true
+        "has_key": false
       },
       {
         "alloy_id": "OrganizationUser$1",
-        "org_id": "Organization$2",
-        "user_id": "User$0",
-        "status": 2,
+        "org_id": "Organization$1",
+        "user_id": "User$2",
+        "status": -1,
         "type": 4,
-        "has_key": true
+        "has_key": false
       },
       {
         "alloy_id": "OrganizationUser$2",
-        "org_id": "Organization$2",
-        "user_id": "User$2",
-        "status": 1,
+        "org_id": "Organization$1",
+        "user_id": "User$0",
+        "status": -1,
         "type": 4,
         "has_key": false
       }
@@ -82,17 +97,21 @@
       },
       {
         "alloy_id": "Group$1",
-        "org_id": "Organization$2"
+        "org_id": "Organization$1"
+      },
+      {
+        "alloy_id": "Group$2",
+        "org_id": "Organization$0"
       }
     ],
     "group_users": [
       {
-        "group_id": "Group$0",
-        "org_user_id": "OrganizationUser$2"
+        "group_id": "Group$1",
+        "org_user_id": "OrganizationUser$1"
       },
       {
         "group_id": "Group$1",
-        "org_user_id": "OrganizationUser$1"
+        "org_user_id": "OrganizationUser$2"
       }
     ],
     "collection_users": [],

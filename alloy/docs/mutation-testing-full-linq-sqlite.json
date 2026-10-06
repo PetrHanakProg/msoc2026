@@ -1,0 +1,1555 @@
+{
+  "baseline": {
+    "probe_a": {
+      "RevokedCannotSee": true,
+      "DisabledOrgBlocksAccess": false,
+      "UncollectedCipherInvisible": false,
+      "PersonalCipherIsPrivate": false,
+      "ReadOnlyPreventsEdit": false,
+      "NoAccessWithoutGrant": false,
+      "HidePasswordsPreventsViewPassword": false,
+      "NoManageGrantPreventsManage": false
+    },
+    "probe_b": {
+      "trx_results": [
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [MySql]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [SqlServer]",
+          "outcome": "NotExecuted"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        },
+        {
+          "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Sqlite]",
+          "outcome": "Passed"
+        }
+      ],
+      "returncode": 0,
+      "stdout_tail": "CipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [MySql] [SKIP]\n[xUnit.net 00:00:03.71]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Postgres] [SKIP]\n[xUnit.net 00:00:03.71]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [SqlServer] [SKIP]\n[xUnit.net 00:00:03.71]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql] [SKIP]\n[xUnit.net 00:00:03.71]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.71]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [SKIP]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [1 ms]\n[xUnit.net 00:00:03.75]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [MySql] [SKIP]\n[xUnit.net 00:00:03.75]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Postgres] [SKIP]\n[xUnit.net 00:00:03.75]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [SqlServer] [SKIP]\n[xUnit.net 00:00:03.79]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [SKIP]\n[xUnit.net 00:00:03.79]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.79]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [SKIP]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [1 ms]\nWARNING: Overwriting results file: /home/ph/projects/msocg/.mutation_test_trx/baseline.trx\nResults File: /home/ph/projects/msocg/.mutation_test_trx/baseline.trx\n\nPassed!  - Failed:     0, Passed:    22, Skipped:    66, Total:    88, Duration: 2 s - Infrastructure.IntegrationTest.dll (net10.0)\n",
+      "stderr_tail": ""
+    },
+    "probe_b_summary": {
+      "generated": {
+        "total": 12,
+        "passed": 12,
+        "failed": 0,
+        "failed_names": []
+      },
+      "hand_written": {
+        "total": 10,
+        "passed": 10,
+        "failed": 0,
+        "failed_names": []
+      }
+    }
+  },
+  "mutations": [
+    {
+      "id": "L1",
+      "category": "linq",
+      "description": "Swap the Confirmed-status join key for Revoked.",
+      "probe_b": {
+        "trx_results": [
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          }
+        ],
+        "returncode": 1,
+        "stdout_tail": "Manage\", \"t\".\"OrganizationUseTotp\", \"t\".\"Key\", \"t\".\"Archives\"\n FROM (\n     SELECT \"c\".\"Id\", \"c\".\"UserId\", \"c\".\"OrganizationId\", \"c\".\"Type\", \"c\".\"Data\", \"c\".\"Attachments\", \"c\".\"CreationDate\", \"c\".\"RevisionDate\", \"c\".\"DeletedDate\", \"c\".\"Favorites\", \"c\".\"Folders\", CASE\n         WHEN \"c1\".\"CollectionId\" IS NULL OR \"c1\".\"OrganizationUserId\" IS NULL THEN \"c2\".\"CollectionId\" IS NOT NULL AND \"c2\".\"GroupId\" IS NOT NULL AND \"c2\".\"ReadOnly\" = 0 AND \"c2\".\"ReadOnly\" IS NOT NULL\n         ELSE \"c1\".\"ReadOnly\" = 0 AND \"c1\".\"ReadOnly\" IS NOT NULL\n     END AS \"Edit\", CASE\n         WHEN \"c1\".\"CollectionId\" IS NULL OR \"c1\".\"OrganizationUserId\" IS NULL THEN \"c2\".\"CollectionId\" IS NOT NULL AND \"c2\".\"GroupId\" IS NOT NULL AND \"c2\".\"HidePasswords\" = 0 AND \"c2\".\"HidePasswords\" IS NOT NULL\n         ELSE \"c1\".\"HidePasswords\" = 0 AND \"c1\".\"HidePasswords\" IS NOT NULL\n     END AS \"ViewPassword\", CASE\n         WHEN \"c1\".\"CollectionId\" IS NULL OR \"c1\".\"OrganizationUserId\" IS NULL THEN \"c2\".\"CollectionId\" IS NOT NULL AND \"c2\".\"GroupId\" IS NOT NULL AND \"c2\".\"Manage\" = 1 AND \"c2\".\"Manage\" IS NOT NULL\n         ELSE \"c1\".\"Manage\" = 1 AND \"c1\".\"Manage\" IS NOT NULL\n     END AS \"Manage\", \"o0\".\"UseTotp\" AS \"OrganizationUseTotp\", \"c\".\"Reprompt\", \"c\".\"Key\", \"c\".\"Archives\"\n     FROM \"Cipher\" AS \"c\"\n     INNER JOIN \"OrganizationUser\" AS \"o\" ON \"c\".\"UserId\" IS NULL AND \"c\".\"OrganizationId\" = \"o\".\"OrganizationId\" AND @___userId_0 = \"o\".\"UserId\" AND -1 = \"o\".\"Status\"\n     INNER JOIN \"Organization\" AS \"o0\" ON \"c\".\"OrganizationId\" = \"o0\".\"Id\" AND \"o\".\"OrganizationId\" = \"o0\".\"Id\" AND \"o0\".\"Enabled\"\n     LEFT JOIN \"CollectionCipher\" AS \"c0\" ON \"c\".\"Id\" = \"c0\".\"CipherId\"\n     LEFT JOIN \"CollectionUsers\" AS \"c1\" ON \"c0\".\"CollectionId\" = \"c1\".\"CollectionId\" AND \"o\".\"Id\" = \"c1\".\"OrganizationUserId\"\n     LEFT JOIN \"GroupUser\" AS \"g\" ON \"c1\".\"CollectionId\" IS NULL AND \"o\".\"Id\" = \"g\".\"OrganizationUserId\"\n     LEFT JOIN \"Group\" AS \"g0\" ON \"g\".\"GroupId\" = \"g0\".\"Id\"\n     LEFT JOIN \"CollectionGroups\" AS \"c2\" ON \"c0\".\"CollectionId\" = \"c2\".\"CollectionId\" AND \"g\".\"GroupId\" = \"c2\".\"GroupId\"\n     WHERE \"c1\".\"CollectionId\" IS NOT NULL OR \"c2\".\"CollectionId\" IS NOT NULL\n     UNION\n     SELECT \"c3\".\"Id\", \"c3\".\"UserId\", \"c3\".\"OrganizationId\", \"c3\".\"Type\", \"c3\".\"Data\", \"c3\".\"Attachments\", \"c3\".\"CreationDate\", \"c3\".\"RevisionDate\", \"c3\".\"DeletedDate\", \"c3\".\"Favorites\", \"c3\".\"Folders\", 1 AS \"Edit\", 1 AS \"ViewPassword\", 1 AS \"Manage\", 0 AS \"OrganizationUseTotp\", \"c3\".\"Reprompt\", \"c3\".\"Key\", \"c3\".\"Archives\"\n     FROM \"Cipher\" AS \"c3\"\n     WHERE \"c3\".\"UserId\" = @___userId_0\n ) AS \"t\"\n\n\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [1 ms]\n[xUnit.net 00:00:04.05]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:04.05]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [SKIP]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [1 ms]\nWARNING: Overwriting results file: /home/ph/projects/msocg/.mutation_test_trx/L1.trx\nResults File: /home/ph/projects/msocg/.mutation_test_trx/L1.trx\n\nFailed!  - Failed:    14, Passed:     8, Skipped:    66, Total:    88, Duration: 2 s - Infrastructure.IntegrationTest.dll (net10.0)\n",
+        "stderr_tail": "[xUnit.net 00:00:02.99]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Sqlite] [FAIL]\n[xUnit.net 00:00:03.01]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.06]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Sqlite] [FAIL]\n[xUnit.net 00:00:03.11]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Sqlite] [FAIL]\n[xUnit.net 00:00:03.15]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Sqlite] [FAIL]\n[xUnit.net 00:00:03.19]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Sqlite] [FAIL]\n[xUnit.net 00:00:03.33]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Sqlite] [FAIL]\n[xUnit.net 00:00:03.51]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.58]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.65]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.71]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.86]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.92]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.97]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Sqlite] [FAIL]\n"
+      },
+      "probe_b_summary": {
+        "generated": {
+          "total": 12,
+          "passed": 4,
+          "failed": 8,
+          "failed_names": [
+            "canSeeExists_MatchesTvf",
+            "WinningRowDivergenceExists_MatchesTvf",
+            "DirectGrantPrecedesGroupGrant_MatchesTvf",
+            "HidePasswordsPathExists_MatchesTvf",
+            "ReadOnlyPathExists_MatchesTvf",
+            "GroupGrantOnlyExists_MatchesTvf",
+            "RevokedMemberScenario_MatchesTvf",
+            "ManagePathExists_MatchesTvf"
+          ]
+        },
+        "hand_written": {
+          "total": 10,
+          "passed": 4,
+          "failed": 6,
+          "failed_names": [
+            "OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant",
+            "OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit",
+            "OrgCipher_DirectManageGrant_CanManage",
+            "OrgCipher_RevokedMember_NotVisible",
+            "OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword",
+            "OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions"
+          ]
+        }
+      }
+    },
+    {
+      "id": "L2",
+      "category": "linq",
+      "description": "Invert the org-enabled kill-switch join key.",
+      "probe_b": {
+        "trx_results": [
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Sqlite]",
+            "outcome": "Failed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Sqlite]",
+            "outcome": "Failed"
+          }
+        ],
+        "returncode": 1,
+        "stdout_tail": "ctionId\" IS NULL OR \"c1\".\"OrganizationUserId\" IS NULL THEN \"c2\".\"CollectionId\" IS NOT NULL AND \"c2\".\"GroupId\" IS NOT NULL AND \"c2\".\"Manage\" = 1 AND \"c2\".\"Manage\" IS NOT NULL\n         ELSE \"c1\".\"Manage\" = 1 AND \"c1\".\"Manage\" IS NOT NULL\n     END AS \"Manage\", \"o0\".\"UseTotp\" AS \"OrganizationUseTotp\", \"c\".\"Reprompt\", \"c\".\"Key\", \"c\".\"Archives\"\n     FROM \"Cipher\" AS \"c\"\n     INNER JOIN \"OrganizationUser\" AS \"o\" ON \"c\".\"UserId\" IS NULL AND \"c\".\"OrganizationId\" = \"o\".\"OrganizationId\" AND @___userId_0 = \"o\".\"UserId\" AND 2 = \"o\".\"Status\"\n     INNER JOIN \"Organization\" AS \"o0\" ON \"c\".\"OrganizationId\" = \"o0\".\"Id\" AND \"o\".\"OrganizationId\" = \"o0\".\"Id\" AND NOT (\"o0\".\"Enabled\")\n     LEFT JOIN \"CollectionCipher\" AS \"c0\" ON \"c\".\"Id\" = \"c0\".\"CipherId\"\n     LEFT JOIN \"CollectionUsers\" AS \"c1\" ON \"c0\".\"CollectionId\" = \"c1\".\"CollectionId\" AND \"o\".\"Id\" = \"c1\".\"OrganizationUserId\"\n     LEFT JOIN \"GroupUser\" AS \"g\" ON \"c1\".\"CollectionId\" IS NULL AND \"o\".\"Id\" = \"g\".\"OrganizationUserId\"\n     LEFT JOIN \"Group\" AS \"g0\" ON \"g\".\"GroupId\" = \"g0\".\"Id\"\n     LEFT JOIN \"CollectionGroups\" AS \"c2\" ON \"c0\".\"CollectionId\" = \"c2\".\"CollectionId\" AND \"g\".\"GroupId\" = \"c2\".\"GroupId\"\n     WHERE \"c1\".\"CollectionId\" IS NOT NULL OR \"c2\".\"CollectionId\" IS NOT NULL\n     UNION\n     SELECT \"c3\".\"Id\", \"c3\".\"UserId\", \"c3\".\"OrganizationId\", \"c3\".\"Type\", \"c3\".\"Data\", \"c3\".\"Attachments\", \"c3\".\"CreationDate\", \"c3\".\"RevisionDate\", \"c3\".\"DeletedDate\", \"c3\".\"Favorites\", \"c3\".\"Folders\", 1 AS \"Edit\", 1 AS \"ViewPassword\", 1 AS \"Manage\", 0 AS \"OrganizationUseTotp\", \"c3\".\"Reprompt\", \"c3\".\"Key\", \"c3\".\"Archives\"\n     FROM \"Cipher\" AS \"c3\"\n     WHERE \"c3\".\"UserId\" = @___userId_0\n ) AS \"t\"\n\n\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql] [1 ms]\n[xUnit.net 00:00:03.80]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.80]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [SKIP]\n[xUnit.net 00:00:03.87]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [SKIP]\n[xUnit.net 00:00:03.87]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.87]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [SKIP]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [1 ms]\nWARNING: Overwriting results file: /home/ph/projects/msocg/.mutation_test_trx/L2.trx\nResults File: /home/ph/projects/msocg/.mutation_test_trx/L2.trx\n\nFailed!  - Failed:    14, Passed:     8, Skipped:    66, Total:    88, Duration: 2 s - Infrastructure.IntegrationTest.dll (net10.0)\n",
+        "stderr_tail": "[xUnit.net 00:00:02.95]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Sqlite] [FAIL]\n[xUnit.net 00:00:02.97]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.01]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Sqlite] [FAIL]\n[xUnit.net 00:00:03.07]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Sqlite] [FAIL]\n[xUnit.net 00:00:03.13]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Sqlite] [FAIL]\n[xUnit.net 00:00:03.17]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Sqlite] [FAIL]\n[xUnit.net 00:00:03.25]     Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Sqlite] [FAIL]\n[xUnit.net 00:00:03.28]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.38]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.45]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.54]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.63]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.69]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Sqlite] [FAIL]\n[xUnit.net 00:00:03.75]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Sqlite] [FAIL]\n"
+      },
+      "probe_b_summary": {
+        "generated": {
+          "total": 12,
+          "passed": 4,
+          "failed": 8,
+          "failed_names": [
+            "ManagePathExists_MatchesTvf",
+            "HidePasswordsPathExists_MatchesTvf",
+            "DirectGrantPrecedesGroupGrant_MatchesTvf",
+            "ReadOnlyPathExists_MatchesTvf",
+            "canSeeExists_MatchesTvf",
+            "WinningRowDivergenceExists_MatchesTvf",
+            "GroupGrantOnlyExists_MatchesTvf",
+            "DisabledOrgScenario_MatchesTvf"
+          ]
+        },
+        "hand_written": {
+          "total": 10,
+          "passed": 4,
+          "failed": 6,
+          "failed_names": [
+            "OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions",
+            "OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant",
+            "OrgCipher_DirectManageGrant_CanManage",
+            "OrgCipher_DisabledOrg_NotVisible",
+            "OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit",
+            "OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword"
+          ]
+        }
+      }
+    },
+    {
+      "id": "L3",
+      "category": "linq",
+      "description": "TODO",
+      "probe_b": {
+        "trx_results": [
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectHidePasswordsGrant_CanSeeNotViewPassword [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OwnerCanSee_Edit_Manage [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DisabledOrg_NotVisible [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrant_CanSeeNotEdit [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectManageGrant_CanManage [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DirectGrantPrecedesGroupGrant_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.GroupGrantOnlyExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ManagePathExists_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_GroupGrantOnly_CanSeeWithGroupPermissions [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.PersonalCipher_OtherUserCannotSee [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_RevokedMember_NotVisible [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.NoAccessWithoutGrantScenario_MatchesTvf [MySql]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.PersonalPrivacyScenario_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_DirectReadOnlyGrantPrecedesGroupWriteGrant [Postgres]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.HidePasswordsPathExists_MatchesTvf [Sqlite]",
+            "outcome": "Passed"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.ReadOnlyPathExists_MatchesTvf [SqlServer]",
+            "outcome": "NotExecuted"
+          },
+          {
+            "test_name": "Bit.Infrastructure.IntegrationTest.Repositories.AlloyCipherAccessTests.OrgCipher_NotInAnyCollection_MemberCannotSee [MySql]",
+            "outcome": "NotExecuted"
+          }
+        ],
+        "returncode": 0,
+        "stdout_tail": "Tests.DisabledOrgScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.DisabledOrgScenario_MatchesTvf [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [MySql] [1 ms]\n[xUnit.net 00:00:03.77]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.77]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [SqlServer] [SKIP]\n[xUnit.net 00:00:03.83]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql] [SKIP]\n[xUnit.net 00:00:03.83]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.83]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer] [SKIP]\n[xUnit.net 00:00:03.88]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql] [SKIP]\n[xUnit.net 00:00:03.88]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.88]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [SKIP]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.canSeeExists_MatchesTvf [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.WinningRowDivergenceExists_MatchesTvf [SqlServer] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.RevokedMemberScenario_MatchesTvf [SqlServer] [1 ms]\n[xUnit.net 00:00:03.96]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [SKIP]\n[xUnit.net 00:00:03.96]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [SKIP]\n[xUnit.net 00:00:03.96]     Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [SKIP]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [MySql] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [Postgres] [1 ms]\n  Skipped Bit.Infrastructure.IntegrationTest.Vault.Repositories.AlloyCipherFixtureTests.UncollectedCipherScenario_MatchesTvf [SqlServer] [1 ms]\nWARNING: Overwriting results file: /home/ph/projects/msocg/.mutation_test_trx/L3.trx\nResults File: /home/ph/projects/msocg/.mutation_test_trx/L3.trx\n\nPassed!  - Failed:     0, Passed:    22, Skipped:    66, Total:    88, Duration: 2 s - Infrastructure.IntegrationTest.dll (net10.0)\n",
+        "stderr_tail": ""
+      },
+      "probe_b_summary": {
+        "generated": {
+          "total": 12,
+          "passed": 12,
+          "failed": 0,
+          "failed_names": []
+        },
+        "hand_written": {
+          "total": 10,
+          "passed": 10,
+          "failed": 0,
+          "failed_names": []
+        }
+      }
+    }
+  ]
+}

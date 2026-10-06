@@ -1,6 +1,6 @@
 <alloy builddate="2025-01-09T08:17:18.350Z">
 
-<instance bitwidth="4" maxseq="5" mintrace="-1" maxtrace="-1" command="Run GroupGrantOnlyExists for 5 but 1 Cipher, 1 Collection" filename="" tracelength="1" looplength="1">
+<instance bitwidth="4" maxseq="4" mintrace="-1" maxtrace="-1" command="Run NoAccessWithoutGrantScenario for 4" filename="" tracelength="1" looplength="1">
 
 <sig label="seq/Int" ID="0" parentID="1" builtin="yes">
 </sig>
@@ -28,27 +28,30 @@
 
 <sig label="signatures/User" ID="8" parentID="2">
    <atom label="signatures/User$0"/>
-   <atom label="signatures/User$1"/>
-   <atom label="signatures/User$2"/>
-   <atom label="signatures/User$3"/>
 </sig>
 
 <field label="canSeeRel" ID="9" parentID="8">
-   <tuple> <atom label="signatures/User$3"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$1"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$2"/> </tuple>
    <types> <type ID="8"/> <type ID="10"/> </types>
 </field>
 
 <field label="canEditRel" ID="11" parentID="8">
-   <tuple> <atom label="signatures/User$3"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$2"/> </tuple>
    <types> <type ID="8"/> <type ID="10"/> </types>
 </field>
 
 <field label="canViewPasswordRel" ID="12" parentID="8">
-   <tuple> <atom label="signatures/User$3"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$2"/> </tuple>
    <types> <type ID="8"/> <type ID="10"/> </types>
 </field>
 
 <field label="canManageRel" ID="13" parentID="8">
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/User$0"/> <atom label="signatures/Cipher$2"/> </tuple>
    <types> <type ID="8"/> <type ID="10"/> </types>
 </field>
 
@@ -68,101 +71,82 @@
 
 <sig label="signatures/Cipher" ID="10" parentID="2">
    <atom label="signatures/Cipher$0"/>
+   <atom label="signatures/Cipher$1"/>
+   <atom label="signatures/Cipher$2"/>
+   <atom label="signatures/Cipher$3"/>
 </sig>
 
 <field label="owner" ID="17" parentID="10">
    <tuple> <atom label="signatures/Cipher$0"/> <atom label="signatures/Organization$0"/> </tuple>
+   <tuple> <atom label="signatures/Cipher$1"/> <atom label="signatures/Organization$0"/> </tuple>
+   <tuple> <atom label="signatures/Cipher$2"/> <atom label="signatures/User$0"/> </tuple>
+   <tuple> <atom label="signatures/Cipher$3"/> <atom label="signatures/Organization$0"/> </tuple>
    <types> <type ID="10"/> <type ID="8"/> </types>
    <types> <type ID="10"/> <type ID="14"/> </types>
 </field>
 
 <sig label="signatures/Collection" ID="18" parentID="2">
    <atom label="signatures/Collection$0"/>
+   <atom label="signatures/Collection$1"/>
+   <atom label="signatures/Collection$2"/>
+   <atom label="signatures/Collection$3"/>
 </sig>
 
 <field label="org" ID="19" parentID="18">
    <tuple> <atom label="signatures/Collection$0"/> <atom label="signatures/Organization$0"/> </tuple>
+   <tuple> <atom label="signatures/Collection$1"/> <atom label="signatures/Organization$0"/> </tuple>
+   <tuple> <atom label="signatures/Collection$2"/> <atom label="signatures/Organization$0"/> </tuple>
+   <tuple> <atom label="signatures/Collection$3"/> <atom label="signatures/Organization$0"/> </tuple>
    <types> <type ID="18"/> <type ID="14"/> </types>
 </field>
 
 <field label="ciphers" ID="20" parentID="18">
-   <tuple> <atom label="signatures/Collection$0"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/Collection$1"/> <atom label="signatures/Cipher$1"/> </tuple>
+   <tuple> <atom label="signatures/Collection$2"/> <atom label="signatures/Cipher$0"/> </tuple>
+   <tuple> <atom label="signatures/Collection$3"/> <atom label="signatures/Cipher$1"/> </tuple>
+   <tuple> <atom label="signatures/Collection$3"/> <atom label="signatures/Cipher$3"/> </tuple>
    <types> <type ID="18"/> <type ID="10"/> </types>
 </field>
 
 <sig label="signatures/OrganizationUser" ID="21" parentID="2">
    <atom label="signatures/OrganizationUser$0"/>
-   <atom label="signatures/OrganizationUser$1"/>
-   <atom label="signatures/OrganizationUser$2"/>
-   <atom label="signatures/OrganizationUser$3"/>
-   <atom label="signatures/OrganizationUser$4"/>
 </sig>
 
 <field label="memberOrg" ID="22" parentID="21">
    <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$1"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$2"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$3"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$4"/> <atom label="signatures/Organization$0"/> </tuple>
    <types> <type ID="21"/> <type ID="14"/> </types>
 </field>
 
 <field label="memberUser" ID="23" parentID="21">
-   <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="signatures/User$2"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$1"/> <atom label="signatures/User$1"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$2"/> <atom label="signatures/User$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$3"/> <atom label="signatures/User$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$4"/> <atom label="signatures/User$3"/> </tuple>
+   <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="signatures/User$0"/> </tuple>
    <types> <type ID="21"/> <type ID="8"/> </types>
 </field>
 
 <field label="status" ID="24" parentID="21">
-   <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="enums/Revoked$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$1"/> <atom label="enums/Revoked$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$2"/> <atom label="enums/Revoked$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$3"/> <atom label="enums/Revoked$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$4"/> <atom label="enums/Confirmed$0"/> </tuple>
+   <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="enums/Confirmed$0"/> </tuple>
    <types> <type ID="21"/> <type ID="25"/> </types>
 </field>
 
 <field label="role" ID="26" parentID="21">
    <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="enums/Custom$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$1"/> <atom label="enums/Custom$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$2"/> <atom label="enums/Custom$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$3"/> <atom label="enums/Custom$0"/> </tuple>
-   <tuple> <atom label="signatures/OrganizationUser$4"/> <atom label="enums/Custom$0"/> </tuple>
    <types> <type ID="21"/> <type ID="27"/> </types>
 </field>
 
 <field label="key" ID="28" parentID="21">
-   <tuple> <atom label="signatures/OrganizationUser$4"/> <atom label="signatures/OrgKey$0"/> </tuple>
+   <tuple> <atom label="signatures/OrganizationUser$0"/> <atom label="signatures/OrgKey$0"/> </tuple>
    <types> <type ID="21"/> <type ID="4"/> </types>
 </field>
 
 <sig label="signatures/Group" ID="29" parentID="2">
    <atom label="signatures/Group$0"/>
-   <atom label="signatures/Group$1"/>
-   <atom label="signatures/Group$2"/>
-   <atom label="signatures/Group$3"/>
 </sig>
 
 <field label="groupOrg" ID="30" parentID="29">
    <tuple> <atom label="signatures/Group$0"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/Group$1"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/Group$2"/> <atom label="signatures/Organization$0"/> </tuple>
-   <tuple> <atom label="signatures/Group$3"/> <atom label="signatures/Organization$0"/> </tuple>
    <types> <type ID="29"/> <type ID="14"/> </types>
 </field>
 
 <field label="members" ID="31" parentID="29">
-   <tuple> <atom label="signatures/Group$0"/> <atom label="signatures/OrganizationUser$3"/> </tuple>
-   <tuple> <atom label="signatures/Group$1"/> <atom label="signatures/OrganizationUser$1"/> </tuple>
-   <tuple> <atom label="signatures/Group$1"/> <atom label="signatures/OrganizationUser$4"/> </tuple>
-   <tuple> <atom label="signatures/Group$2"/> <atom label="signatures/OrganizationUser$0"/> </tuple>
-   <tuple> <atom label="signatures/Group$2"/> <atom label="signatures/OrganizationUser$3"/> </tuple>
-   <tuple> <atom label="signatures/Group$3"/> <atom label="signatures/OrganizationUser$1"/> </tuple>
-   <tuple> <atom label="signatures/Group$3"/> <atom label="signatures/OrganizationUser$2"/> </tuple>
-   <tuple> <atom label="signatures/Group$3"/> <atom label="signatures/OrganizationUser$4"/> </tuple>
    <types> <type ID="29"/> <type ID="21"/> </types>
 </field>
 
@@ -170,38 +154,33 @@
    <atom label="signatures/CollectionUser$0"/>
    <atom label="signatures/CollectionUser$1"/>
    <atom label="signatures/CollectionUser$2"/>
-   <atom label="signatures/CollectionUser$3"/>
 </sig>
 
 <field label="cuCollection" ID="33" parentID="32">
-   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/Collection$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/Collection$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/Collection$2"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/Collection$1"/> </tuple>
    <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/Collection$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$3"/> <atom label="signatures/Collection$0"/> </tuple>
    <types> <type ID="32"/> <type ID="18"/> </types>
 </field>
 
 <field label="cuOrgUser" ID="34" parentID="32">
-   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/OrganizationUser$3"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/OrganizationUser$2"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/OrganizationUser$1"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$3"/> <atom label="signatures/OrganizationUser$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/OrganizationUser$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/OrganizationUser$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/OrganizationUser$0"/> </tuple>
    <types> <type ID="32"/> <type ID="21"/> </types>
 </field>
 
 <field label="readOnly" ID="35" parentID="32">
-   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/True$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/False$0"/> </tuple>
    <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/True$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/False$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$3"/> <atom label="signatures/False$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/True$0"/> </tuple>
    <types> <type ID="32"/> <type ID="6"/> </types>
 </field>
 
 <field label="hidePasswords" ID="36" parentID="32">
-   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/True$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/False$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/True$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$3"/> <atom label="signatures/False$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/False$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/True$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/False$0"/> </tuple>
    <types> <type ID="32"/> <type ID="6"/> </types>
 </field>
 
@@ -209,7 +188,6 @@
    <tuple> <atom label="signatures/CollectionUser$0"/> <atom label="signatures/True$0"/> </tuple>
    <tuple> <atom label="signatures/CollectionUser$1"/> <atom label="signatures/False$0"/> </tuple>
    <tuple> <atom label="signatures/CollectionUser$2"/> <atom label="signatures/True$0"/> </tuple>
-   <tuple> <atom label="signatures/CollectionUser$3"/> <atom label="signatures/False$0"/> </tuple>
    <types> <type ID="32"/> <type ID="6"/> </types>
 </field>
 
@@ -218,17 +196,17 @@
 </sig>
 
 <field label="cgCollection" ID="39" parentID="38">
-   <tuple> <atom label="signatures/CollectionGroup$0"/> <atom label="signatures/Collection$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionGroup$0"/> <atom label="signatures/Collection$2"/> </tuple>
    <types> <type ID="38"/> <type ID="18"/> </types>
 </field>
 
 <field label="cgGroup" ID="40" parentID="38">
-   <tuple> <atom label="signatures/CollectionGroup$0"/> <atom label="signatures/Group$3"/> </tuple>
+   <tuple> <atom label="signatures/CollectionGroup$0"/> <atom label="signatures/Group$0"/> </tuple>
    <types> <type ID="38"/> <type ID="29"/> </types>
 </field>
 
 <field label="readOnly" ID="41" parentID="38">
-   <tuple> <atom label="signatures/CollectionGroup$0"/> <atom label="signatures/False$0"/> </tuple>
+   <tuple> <atom label="signatures/CollectionGroup$0"/> <atom label="signatures/True$0"/> </tuple>
    <types> <type ID="38"/> <type ID="6"/> </types>
 </field>
 
@@ -283,34 +261,24 @@
 <sig label="univ" ID="2" builtin="yes">
 </sig>
 
-<skolem label="$GroupGrantOnlyExists_u" ID="52">
-   <tuple> <atom label="signatures/User$3"/> </tuple>
+<skolem label="$NoAccessWithoutGrantScenario_u" ID="52">
+   <tuple> <atom label="signatures/User$0"/> </tuple>
    <types> <type ID="8"/> </types>
 </skolem>
 
-<skolem label="$GroupGrantOnlyExists_c" ID="53">
-   <tuple> <atom label="signatures/Cipher$0"/> </tuple>
+<skolem label="$NoAccessWithoutGrantScenario_c" ID="53">
+   <tuple> <atom label="signatures/Cipher$3"/> </tuple>
    <types> <type ID="10"/> </types>
 </skolem>
 
-<skolem label="$GroupGrantOnlyExists_ou" ID="54">
-   <tuple> <atom label="signatures/OrganizationUser$4"/> </tuple>
+<skolem label="$NoAccessWithoutGrantScenario_ou" ID="54">
+   <tuple> <atom label="signatures/OrganizationUser$0"/> </tuple>
    <types> <type ID="21"/> </types>
 </skolem>
 
-<skolem label="$GroupGrantOnlyExists_col" ID="55">
-   <tuple> <atom label="signatures/Collection$0"/> </tuple>
+<skolem label="$NoAccessWithoutGrantScenario_col" ID="55">
+   <tuple> <atom label="signatures/Collection$3"/> </tuple>
    <types> <type ID="18"/> </types>
-</skolem>
-
-<skolem label="$GroupGrantOnlyExists_g" ID="56">
-   <tuple> <atom label="signatures/Group$3"/> </tuple>
-   <types> <type ID="29"/> </types>
-</skolem>
-
-<skolem label="$GroupGrantOnlyExists_cg" ID="57">
-   <tuple> <atom label="signatures/CollectionGroup$0"/> </tuple>
-   <types> <type ID="38"/> </types>
 </skolem>
 
 </instance>
